@@ -1,0 +1,77 @@
+import java.io.IOException;
+import java.util.*;
+
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+public class InferenceRG {
+	
+	BNode query;
+	ArrayList<BNode> evidenceVars;
+	BayesianNetworkRG bnet;
+	double[] answer;
+	
+	public InferenceRG(BNode query,String evidence,BayesianNetworkRG bnet) {
+		String[] eClauses = evidence.split(",");
+		ArrayList<String[]> eFinal = new ArrayList<String[]>();
+		for(int i = 0; i < eClauses.length; i++) {
+			String[] eClause = eClauses[i].split("=");
+			eFinal.add(eClause); 
+		}
+		
+		this.query = query;
+		this.bnet = bnet;
+		evidenceVars = new ArrayList<BNode>();
+		this.setUpEvidence(eFinal);
+	}
+	
+	public InferenceRG(BNode query,BayesianNetworkRG bnet) {
+		this.query = query;
+		this.bnet = bnet;
+		evidenceVars = new ArrayList<BNode>();
+	}
+	
+	public void setUpEvidence(ArrayList<String[]> evidence) {
+		for(String[] clause : evidence) {
+			BNode current = bnet.getNodeByName(clause[0]);
+			current.setVariable(clause[1]);
+			evidenceVars.add(current);
+		}
+	}
+	
+	public double[] normalize(double[] vector) {
+		double sum = 0;
+		for(int i = 0; i < vector.length; i++) {
+			sum += vector[i];
+		}
+		double alpha = 1.0 / sum;
+		for(int i = 0; i < vector.length; i++) {
+			vector[i] *= alpha;
+		}
+		return new double[] {vector[0], vector[1]};
+	}
+	
+	public void printVector(double[] vec) {
+		System.out.print("< ");
+		for(double v : vec) {
+			System.out.print(v+", ");
+		}
+		System.out.println(" >");
+	}
+	
+	public void printQuery() {
+		System.out.print("Query- P("+query.getName()+"|");
+		if (evidenceVars.size() > 0) {
+			for (int i = 0; i < evidenceVars.size() - 1; i++)
+				System.out.print(evidenceVars.get(i).getName() + "= "
+						+ evidenceVars.get(i).getVal() + ", ");
+			System.out.println(evidenceVars.get(evidenceVars.size() - 1)
+					.getName()
+					+ "= "
+					+ evidenceVars.get(evidenceVars.size() - 1).getVal());
+		}
+		else
+			System.out.print("*no evidence*");
+		System.out.println(") =   ");
+		printVector(answer);
+	}
+}

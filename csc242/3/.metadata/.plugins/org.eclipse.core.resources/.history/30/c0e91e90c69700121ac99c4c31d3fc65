@@ -1,0 +1,35 @@
+import java.util.*;
+public class BayesianNetworkRG {
+	private ArrayList<Node> nodes;
+	//private ArrayList<Integer> connectors;
+	
+	public BayesianNetworkRG() {
+		nodes = new ArrayList<Node>();
+		//connectors = new ArrayList<Integer>();
+	}
+	
+	public void addNode(Node Node) {
+		nodes.add(Node);
+	}
+	
+	public void addConnector(Node Node, String parent) {
+		for(Node potParent : nodes) {
+			if(potParent.getName().equals(parent))
+				Node.addParent(potParent);
+		}
+	}
+	
+	public RandomVariableRG getVariableByName(String name) {
+		for(Node c : nodes) {
+			if(c.getName() == name)
+				return c.getVariable();
+		}
+		return null;
+	}
+	
+	public void print() {
+		for(Node c : nodes) {
+			c.print();
+		}
+	}
+}

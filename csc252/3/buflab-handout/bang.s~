@@ -1,0 +1,5 @@
+movl $0x601c7441, %eax
+movl $0x8048da8, %ebx
+movl %ebx, 0x3c(%esp)
+pushl $0x8048da8
+ret

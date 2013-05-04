@@ -1,0 +1,8 @@
+import java.util.*;
+public class InferenceRG {
+	
+	public static void main(String[] args) {
+		XMLBIFParserRG parser = new XMLBIFParserRG();
+		BayesianNetworkRG network = parser.readNetworkFromFile(argv[0]);
+	}
+}

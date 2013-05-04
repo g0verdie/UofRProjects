@@ -1,0 +1,8 @@
+;trinary tree
+(display 2.1)(newline)
+(newline)
+
+(define (makeNode data)
+  (list data left mid right)
+)
+

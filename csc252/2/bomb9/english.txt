@@ -1,0 +1,58 @@
+edi = 0
+eax = arr[edi]
+eax--
+if(arr[edi] > 5)
+	blow up
+esi = edi + 1
+if(esi == 6)
+{
+	ebx = 0				8048deb
+	esi = ebx
+	ecx = e[28 + 4*ebx]
+	eax = 1
+	edx = node1
+	ecx = 1
+	if(ecx < 1)
+	{
+		edx = nextNode()
+		eax++
+		if(ecx!= eax)
+			do over from "edx = nextNode()"
+
+		e[10 + e*esi] = edx
+		ebx++
+		if(ebx != 6)
+			do over from "ebx = 0"
+		do over from "e[10 + e*esi] = edx"
+	}
+	go to "e[10 + e*esi] = edx"
+}
+
+ebx = esi
+eax = e[esi]
+if(eax != e[esi-1]
+	blow up
+ebx++
+edi = esi
+if(ebx >= 5)
+	jump to "eax = e[ebx]"
+
+ebx = x 	//e[10]
+eax = y 	//e[14]
+a = z		//ebx[8] = z //e[18]
+edx = z 	//e[18]
+b = z 		//eax[8] = e[18]
+eax = c		//e[1c]
+d = eax		edx[8] = eax
+edx = e[20]
+eax[8] = edx
+e[24] = eax
+edx[8] = eax
+eax[8] = 0
+esi = 5
+eax = ebx[8]
+edx = eax
+
+if(edx > ebx)
+edx > ebx
+win

@@ -1,0 +1,79 @@
+import java.util.*;
+/*
+ * wrapper class for RandomVariableRG, contains links to parent nodes as well as
+ * the variable's CPT
+ * !!note!! because of calculation reasons, every node is considered its own parent
+ */
+public class BNode {
+	private RandomVariableRG variable;
+	private ArrayList<BNode> parents = null;
+	private CPTRG cpt;
+	
+	
+	public BNode(RandomVariableRG variable) {
+		this.variable = variable;
+		this.parents = new ArrayList<BNode>();
+	}
+	//add probabilities to the cpt
+	public void addProbs(String str)
+	{
+		StringTokenizer tokens = new StringTokenizer(str);
+		ArrayList<Double> probList = new ArrayList<Double>();
+		while (tokens.hasMoreTokens()) {
+		    String token = tokens.nextToken();
+		    probList.add(Double.parseDouble(token));
+		}
+		cpt.addProbs(probList);
+	}
+
+	public void addParents(ArrayList<BNode> parents) {
+		for(BNode p : parents)
+			this.parents.add(p);
+	}
+	
+	//constructs the CPT
+	public void makeCPT() {
+		//collect all relavent variables
+		ArrayList<RandomVariableRG> totalVar = new ArrayList<RandomVariableRG>();
+		for(BNode node : this.parents) {
+			totalVar.add(node.getVariable());
+		}
+		cpt = new CPTRG(totalVar);
+	}
+	public String getName() 
+	{return variable.getName();}
+	
+	public RandomVariableRG getVariable() 
+	{return variable;}
+	
+	public void setVariable(String val)
+	{variable.setValue(val);}
+	
+	public CPTRG getCPT()
+	{return this.cpt;}
+	
+	public String getVal()
+	{return this.variable.getValue();}
+	
+	public ArrayList<String> getDomain()
+	{return this.variable.getDomain();}
+	
+	public ArrayList<BNode> getParents() 
+	{ return this.parents;}
+	
+	public void print() {
+		variable.print();
+		System.out.println("parents: ");
+		for(BNode p : parents) {
+			System.out.println("\t"+p.getName()+", ");
+		}
+		System.out.println("CPTRG");
+		cpt.print();
+		
+	}
+	public static ArrayList<BNode> copyArray(ArrayList<BNode> toCopy){
+		ArrayList<BNode> toReturn = new ArrayList<BNode>();
+		toReturn.addAll(toCopy);
+		return toReturn;
+	}
+}

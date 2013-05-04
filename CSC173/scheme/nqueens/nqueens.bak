@@ -1,0 +1,7 @@
+(define (nqueens n)
+  (let ( (board (list '())))
+    (do ((col 0 (+ col 1))) ((>= i n))
+      (set! board (append (list '()) )
+      )
+    )
+  )

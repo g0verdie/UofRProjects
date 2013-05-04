@@ -1,0 +1,20 @@
+facts
+married a widow
+widow had a daughter
+my father married the widow's daughter
+i had a son
+widow's daughter had son
+
+claims
+daughter(wDaughter,i)
+mother(wDaughter,i)
+son_in_law(father,i)
+brother(son,dad)
+uncle(baby,i)
+brother(baby,wDaughter)
+mother(wDaughter,i)
+grandparent(i,wDSon)
+mother(widow,wDaughter)
+grandparent(i,widow)
+grandparent(i,widow)
+grandparent(i,i)

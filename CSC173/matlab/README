@@ -1,0 +1,28 @@
+Dan Scarafoni
+CSC173
+Matlab- Gaussian Elimination
+
+Files
+	backElim.m(A C)- does backwards substitution to solve the matrix. Takes in coefficient matrix A and solution matrix C, returns modified matrices A and C
+	checkSizes.m(A C)- checks coefficient matrix A and solution matrix C to ensure that they are of appropriate sizes and dimensions for calculation purposes, returns booolean x: true if it passes the checks and false otherwise 
+	fowardElim.(A C)- performs foward elimination on coefficient matrix A and solution matrix C, returns modified matrices A and C
+	fowardElimPiv- identical to the above, however contains a built in call for pivoting if a zero pivot is detected
+	gaussElim.m(size reps piv)- The top level function for runnin the gaussian elimination. Generated coefficient matrix A of size (sizexsize) and solution matrix C of size(sizex1), solved this matrix, and repeated the process reps times. Piv is a boolean indicating whether the function uses partial pivoting or not. Returns solution matrix of last run B, boolean of whether the the function was solved correctly rightAns, average time of solution run avgTime, and average variable value avgVar. Also calculates standard deviation.
+	gaussElimOneVar.m (size reps piv)- similar to the above but returns only one variable, this is done to allow high amounts of repitition for certain test runs
+	gaussElimPert(size reps piv pertR)- similar to the above two, but changes all the values in all the coefficient matricies created by an amount between -pertR and pertR. Calculates the mean distance between results and their standard deviation
+	partialPivot.m- function used to test partial pivoting algorithm, not used in any experiments.
+	pivot.m(A C)- pivots two rows in A and C and returns modified matricies A and C
+	randMat(m n)- generates a matrix of dimensions mXn with random values between -100 and 100
+	results.ods- excel file used to hold results from experiments and their graphs
+	rowAdd(A C R1 R2 S)- adds scalar s * row R1 to row R2 on matricies A and C
+	rowSwap(A C R1 R2)- swaps rows R1 and R2 in matrices A and C
+	scalarMult(A C R1 S)- multiplies row R1 of A and C by scalar S
+
+
+
+to run
+	1. open matlab
+	2. navigate to the appropriate directory
+	2.5 you may need to load the functions into the program. To do so use the load() function.
+	3. type in the function name that you wish to run with the appropriate parameters into the console and press enter.   
+		example- to run 10 runs of the non-pivotal gaussian elimination algorithm on 20x20 matrices enter gaussElim(20,10,0)

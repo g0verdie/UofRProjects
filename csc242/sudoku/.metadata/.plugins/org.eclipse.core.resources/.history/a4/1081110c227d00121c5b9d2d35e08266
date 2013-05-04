@@ -1,0 +1,41 @@
+import java.io.*;
+import java.util.*;
+
+public class Translator {
+	BufferedWriter bw;
+	BufferedReader br;
+	public Translator() {
+		try{ 
+			bw = new BufferedWriter(new FileWriter("toTranslate.txt"));
+			br = new BufferedReader(new FileReader("translated.txt"));
+		}
+		catch(FileNotFoundException e)	{System.out.println("can't find toTranslate");}
+		catch(IOException e)			{System.out.println("IO problem");}
+	}
+	
+	public void writeTo(Integer vars, String[] clauses){
+		
+		try{ 
+			
+			bw.write("p cnf "+vars.toString()+" "+(new Integer(clauses.length)).toString()+"\n");
+			for(int i = 0; i < clauses.length; i++)
+				bw.write(clauses[i]+"\n");
+			bw.close();
+		}
+		catch(FileNotFoundException e)	{System.out.println("can't find toTranslate");}
+		catch(IOException e)			{System.out.println("IO problem");}
+	}
+	
+	public ArrayList<String> readFrom() {
+		ArrayList<String> holdList = new ArrayList<String>();
+		try { 
+			String holdLine;
+			while((holdLine = br.readLine()) != null)
+				holdList.add(holdLine);
+		}
+		catch(FileNotFoundException e)	{System.out.println("can't find toTranslate");}
+		catch(IOException e)			{System.out.println("IO problem");}
+		
+		return holdList;
+	}
+}

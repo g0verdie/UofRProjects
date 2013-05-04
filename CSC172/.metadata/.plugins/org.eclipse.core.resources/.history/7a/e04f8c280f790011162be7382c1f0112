@@ -1,0 +1,17 @@
+public class Heap<t extends Comparable<? super t>>
+{
+	private int length;
+	public t data[]; 
+	
+	public Heap(int l)
+	{
+		length = l;
+		data = new t[length];
+	}
+	
+	public int size()
+	{return length;}
+	
+	public boolean isEmpty()
+	{return data[0] == null;}
+}

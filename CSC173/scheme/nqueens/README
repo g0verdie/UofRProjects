@@ -1,0 +1,26 @@
+Dan Scarafoni
+NQUeen problem
+dscarafo@u.rochester.edu
+
+Files
+	backTrack- contains the methods necessary for backtracking tree search
+		functions
+			(nqueens n)- runs the n queens problem on an nXn board placing n queens
+			(testSpot board col row n)- tests a spot on the board to see if placing a 					queen there would cause a conflict
+			 (checkRow board row col)- checks to see if there are any queens in row (excluding the one at index col), returns false if there is a conflict, true otherwise
+			(checkDiag board row col)- checks to see if there are any diagonal conflicts for the piece at [row,col], returns true if there are no conflicts, false otherwise
+			
+	backTrackMidInc- contains the methods for solving backtracking. Solves by starting at the middle column and working out. Contains all methods from backTrack with the addition of the following
+			functions
+				midInc/midDec- finds the next/previous column to be checked for the program after the program has placed a queen in a column or backtracked respectively
+			
+	minTrack- contains the methods necessary for minConflicts "hill climbing" solver
+		functions
+			(nqueens n)- attempts to solve the n queens problem with a n queens and an nxn board
+			(makeboard n)- creates a board (as a vector) of length n with pieces aloted to random rows in each column
+			(solvLoop board)- a recursive functoin that runs through each column in board and moves each piece in that column to the row with the least conflicts. checks to see if the puzzle is solved, and resets the puzzle if stuck
+			(solvLoop2 board col)- finds the row with the least conflicts in col of board
+			(checkRow board row col)- similar to checkRow in backtracking, but returns the number of conflicts instead of a boolean
+			(checkDiag board col row)- similar to CheckDiag in backtracking, but returns the number of conflicts instead of a boolean
+			(checkConflicts board row col)- runs checkDiag and checkRow and returns the total number of conflicts with respect to [row,col]
+			

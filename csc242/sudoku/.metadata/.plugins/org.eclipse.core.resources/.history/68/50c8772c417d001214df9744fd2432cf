@@ -1,0 +1,50 @@
+import java.util.*;
+public class Solver {
+	private Sudoku board;
+	private int[][][] vars;
+	
+	public Solver(Sudoku board){
+		this.board = board;
+		setUpVars(board);
+	}
+	
+	private void setUpVars(Sudoku board){
+		int var = 0;
+		for(int x = 0; x < board.size(); x++)
+			for(int y = 0; y < board.size(); y++)
+				for(int z = 0; z < board.size(); z++)
+					vars[x][y][z] = var++;
+	}
+	public ArrayList<String> allDiff(){
+		
+		//each square can only have one value
+		for(int x = 0; x < board.size(); x++)
+			for(int y = 0; y < board.size(); y++){
+				String[] numsSoFar = new String[board.size()];
+				for(int z = 0; z < board.size; z++)
+			}
+		/*//rows
+		ArrayList<String> constraints = new ArrayList<String>();
+		for(int i = 0; i < board.size(); i++) {
+			String[] rowSoFar = new String[board.size()];
+			for(int j = 0; j < board.size(); j++){
+				//fill up the row
+				rowSoFar[j] = new Integer(board.get(i,j)).toString();
+			}
+			//pair into arcConstraints and add to the arraylist
+			constraints = allDiffArcs(rowSoFar,constraints);
+		}*/
+		return constraints;
+	}
+	
+	//convert array of integers into binary arguments
+	public ArrayList<String> allDiffArcs(String[] list,ArrayList<String> constraints)
+	{
+		for(int i = 0; i < list.length; i++)
+			for(int j = i; j < list.length; j++)
+			{
+				constraints.add("")
+			}
+		return constraints;
+	}
+}

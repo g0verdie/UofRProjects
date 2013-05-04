@@ -1,0 +1,57 @@
+start a new game?(1 for yes, 0 for no)
+1
+how many positions?
+4
+how many colors do you want to use?
+6
+what do you want color 1 to be?
+a
+what do you want color 2 to be?
+b
+what do you want color 3 to be?
+c
+what do you want color 4 to be?
+d
+what do you want color 5 to be?
+e
+what do you want color 6 to be?
+f
+Here's my guess
+dcdfSo how many were in the right position and right color?
+0
+Ok, how many were the right color but wrong position?
+1
+Here's my guess
+bdbaSo how many were in the right position and right color?
+0
+Ok, how many were the right color but wrong position?
+1
+Here's my guess
+faebSo how many were in the right position and right color?
+1
+Ok, how many were the right color but wrong position?
+0
+Here's my guess
+cbfbSo how many were in the right position and right color?
+0
+Ok, how many were the right color but wrong position?
+1
+Here's my guess
+ffadSo how many were in the right position and right color?
+0
+Ok, how many were the right color but wrong position?
+1
+Here's my guess
+eaccSo how many were in the right position and right color?
+3
+Ok, how many were the right color but wrong position?
+0
+Here's my guess
+eaceSo how many were in the right position and right color?
+2
+Ok, how many were the right color but wrong position?
+0
+Here's my guess
+aaccSo how many were in the right position and right color?
+4
+alright I won! and it only took me 8 turns!start a new game?(1 for yes, 0 for no)

@@ -1,0 +1,9 @@
+S --> Quant(Var NP Con VP)
+
+NP --> Noun(Var)
+
+VP --> Verb(Var)
+   --> Verb(Var,Quant(Var2(NP))
+   --> BeVerb Adj
+RELCL --> Rel VP
+      --> Rel NP Verb

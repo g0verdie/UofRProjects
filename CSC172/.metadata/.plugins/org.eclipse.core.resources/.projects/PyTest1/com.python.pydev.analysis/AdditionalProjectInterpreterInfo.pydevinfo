@@ -1,0 +1,21 @@
+-- VERSION_3
+-- START DISKCACHE
+C:\Users\Dan Scarafoni\Documents\CSC172\.metadata\.plugins\org.eclipse.core.resources\.projects\PyTest1\com.python.pydev.analysis\v1_indexcache
+.v1_indexcache
+Main|0|C:\Users\Dan Scarafoni\Documents\CSC172\pojects\proj2\PyTest1\sr\Main.py
+-- END DISKCACHE
+-- START DICTIONARY
+1
+1=Main
+-- END DICTIONARY
+-- START TREE 1
+5
+att|1|attempt!10@
+pos|1|possible!11@
+res|1|results!11@
+sco|1|score!10@
+sol|1|solve!10@
+-- END TREE
+-- START TREE 2
+0
+-- END TREE

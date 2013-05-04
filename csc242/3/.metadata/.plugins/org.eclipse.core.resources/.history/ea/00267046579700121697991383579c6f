@@ -1,0 +1,40 @@
+import java.util.*;
+public class CPTRG {
+	private CPTRGNode head;
+
+	public CPTRG(ArrayList<RandomVariableRG> vars) {
+		head = new CPTRGNode(vars.get(0),"head");
+		for(int i = 0; i < head.children.size(); i++) {
+			ArrayList<RandomVariableRG> varsLeft = vars;
+			varsLeft.remove(0);
+	
+			addVar(head,vars.get(0).getDomain().get(i),varsLeft);
+		}
+	}
+	
+	private void addVar(CPTRGNode parent,RandomVariableRG val,ArrayList<RandomVariableRG> varsLeft) {
+		parent.addChild(new CPTRGNode(varsLeft.get(0),val));
+		if(varsLeft.size() > 0) {
+			for(int i = 0; i < parent.children.size(); i++) {
+			parent.addChild(new CPTRGNode(child,vars.));
+			}
+		}
+	}
+	
+	private class CPTRGNode {
+		private String val;
+		private String name;
+		public ArrayList<CPTRGNode> children;
+		private int probability;
+		
+		public CPTRGNode(RandomVariableRG var,String val) {
+			this.val = val;
+			name = var.getName();
+			children = new ArrayList<CPTRGNode>(var.getDomain().size());
+		}
+		
+		public void addChild(CPTRGNode child) {
+			this.children.add(child);
+		}
+	}
+}

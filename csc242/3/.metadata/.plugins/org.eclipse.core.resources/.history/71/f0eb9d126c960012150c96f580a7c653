@@ -1,0 +1,6 @@
+public interface BayesianNetworkRG {
+	private CPTRG[] nodes;
+	private int[] connectors;
+	
+	public BayesianNetworkRG()
+}

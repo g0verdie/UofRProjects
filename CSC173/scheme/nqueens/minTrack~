@@ -1,0 +1,48 @@
+(define (nqueens n)
+  ;initialize board
+  (let ( (board (make-vector n )))
+    ;run through colums, start recursing
+    (testSpot board 0 0 n)
+    ;(display board)
+    )
+  )
+
+
+;check to see if there's another rowNum in board
+(define (checkRow board row i n)
+  ;(display "checkRow")(newline)
+  (if (eq? i n)
+      (begin
+        ;(display "pass")(newline)
+        #t
+        )
+      (if (eq? (vector-ref board i) row)
+          (begin
+            ;(display (vector-ref board i))
+            ;(display row)
+            #f
+            ;(display "fail")(newline)
+            )
+          (checkRow board row (+ i '1) n)
+          )
+      )
+  )
+(define (checkDiag board row col)
+  (let ((conflict #t))
+    (do ((i 0 (+ i 1))) ((>= i (vector-length board)))
+      (begin
+        ;(display (+ row (abs (- col i))))(newline)(newline)
+        ;(newline)
+        (if (and (or (eqv?  (+ row (abs (- col i))) (vector-ref board i)) (eqv? (- row (abs (- col i))) (vector-ref board i))) (not (eqv? i col)))
+            (begin
+              ;(display i)
+              (set! conflict #f)
+            )
+            )
+        )
+      )
+    ;(display "it worked? ")(display conflict)(newline)(newline)
+    conflict
+    )
+  )
+(random 100)

@@ -1,0 +1,33 @@
+import java.util.*;
+public class Solver {
+	private Sudoku board;
+	
+	public Solver(Sudoku board){
+		this.board = board;
+	}
+	
+	public ArrayList<String> allDiff(){
+		//rows
+		ArrayList<String> constraints = new ArrayList<String>();
+		for(int i = 0; i < board.size(); i++) {
+			String[] rowSoFar = new String[board.size()];
+			for(int j = 0; j < board.size(); j++){
+				//fill up the row
+				rowSoFar[j] = new Integer(board.get(i,j)).toString();
+			}
+			//pair into arcConstraints and add to the arraylist
+			constraints = allDiffArcs(rowSoFar,constraints);
+		}
+		return constraints;
+	}
+	
+	public ArrayList<String> allDiffArcs(String[] list,ArrayList<String> constraints)
+	{
+		for(int i = 0; i < list.length; i++)
+			for(int j = i; j < list.length; j++)
+			{
+				constraints.add("")
+			}
+		return constraints;
+	}
+}

@@ -1,0 +1,146 @@
+import java.util.*;
+public class CPTRG {
+	private CPTRGNode head;
+
+	public CPTRG(ArrayList<RandomVariableRG> vars) {
+		//initialize head
+		head = new CPTRGNode(vars.get(0),vars.get(0).getName());
+		for(int i = 0; i < vars.get(0).getDomain().size(); i++) {
+			//System.out.println("size- "+vars.size());
+			head.addChild(addVar(vars,vars.get(0).getDomain().get(i)));
+		}
+	}
+	
+	public CPTRGNode addVar(ArrayList<RandomVariableRG> varsLeft,String parentDomain) {
+		CPTRGNode currentNode = new CPTRGNode(varsLeft.get(0),parentDomain);
+		ArrayList<RandomVariableRG> varsLeft1 = new ArrayList<RandomVariableRG>();
+		varsLeft1.addAll(varsLeft);
+		varsLeft1.remove(0);
+		//if no more variables, were done adding children
+		if(varsLeft.size() == 1)
+			return currentNode;
+		//otherwise repeat for another layer (variable)
+		else {
+			for(int i = 0; i < varsLeft.get(0).getDomain().size(); i++) {
+				head.addChild(addVar(varsLeft1,varsLeft.get(0).getDomain().get(i)));
+			}
+		}
+			
+		return currentNode;
+	}
+	
+	public ArrayList<CPTRGNode> getLeaves() {
+		ArrayList<CPTRGNode> leaves = new ArrayList<CPTRGNode>();
+		//System.out.println(head.children.size());
+		for(CPTRGNode child : head.children) {
+			leaves.addAll(getLeavesRec(child));
+		}
+		return leaves;
+	}
+	public ArrayList<CPTRGNode> getLeavesRec(CPTRGNode node) {
+		//System.out.println("in getLeavesRec");
+		//System.out.println(node.children == null);
+		ArrayList<CPTRGNode> leaves = new ArrayList<CPTRGNode>();
+		if(node.children.isEmpty()) {
+			leaves.add(node);
+			return leaves;
+		}
+		else {
+			for(CPTRGNode child : node.children) {
+				leaves.addAll(getLeavesRec(child));
+			}
+		}
+		return null;
+	}
+	
+	public int indexOfMatch(ArrayList<BNode> parents, RandomVariableRG lookFor) {
+		for(int i = 0; i < parents.size(); i++) {
+			if(parents.get(i).getName().equals(lookFor.getName()));
+				return i;
+		}
+		return -1;
+	}
+	public void addProbs(ArrayList<Double> probabilities) {
+		ArrayList<CPTRGNode> leaves = this.getLeaves();
+		//System.out.println(leaves.size());
+		for(int i = 0; i < probabilities.size(); i++)
+			leaves.get(i).addProb(probabilities.get(i));
+			
+	}
+
+	public double findSpot(ArrayList<BNode> parents) {
+		BNode currentVar = parents.get(indexOfMatch(parents,head.var));
+		for(int i = 0; i < head.children.size(); i++) {
+			CPTRGNode currentChild = head.children.get(i);
+			if(currentVar.getVariable().getValue().equals(currentChild.var.getValue())) {
+				return findSpotRec(currentChild,parents);
+			}
+		}
+		return 0;
+	}
+	
+	public double findSpotRec(CPTRGNode currentChild,ArrayList<BNode> parents) {
+		//if we're at a leaf
+		if(currentChild.children == null)
+			return currentChild.probability;
+		//otherwise we gotta go deeper
+		else {
+			BNode currentVar = parents.get(indexOfMatch(parents,head.var));
+			for(int i = 0; i < head.children.size(); i++) {
+				CPTRGNode currentChild1 = currentChild.children.get(i);
+				if(currentVar.getVariable().getValue().equals(currentChild1.var.getValue()))
+					return findSpotRec(currentChild1,parents);
+			}
+			return 0;
+		}
+	}
+		
+		public void print() {
+			head.print();
+			for(int i = 0; i < head.children.size(); i++) {
+				System.out.print("\t");
+				printRec(head.children.get(i));
+			}
+		}
+		
+		public void printRec(CPTRGNode node) {
+			System.out.println("printrec");
+			node.print();
+			if(node.children == null) 
+				System.out.println("value = "+node.val);
+			else {
+				for(int i = 0; i < node.children.size(); i++) {
+					System.out.print("\t");
+					printRec(head.children.get(i));
+				}
+			}	
+		}
+	private class CPTRGNode {
+		public String val;
+		public String name;
+		public ArrayList<CPTRGNode> children;
+		public double probability;
+		public RandomVariableRG var;
+		
+		public CPTRGNode(RandomVariableRG var,String val) {
+			this.val = val;
+			this.var = var;
+			name = var.getName();
+			children = new ArrayList<CPTRGNode>(var.getDomain().size());
+			this.probability = -1;
+		}
+		
+		public void addChild(CPTRGNode child) {
+			this.children.add(child);
+		}
+		
+		public void addProb(double probability) {
+			this.probability = probability;
+		}
+		
+		public void print() {
+			System.out.print("CPTRGNODE");
+			System.out.println("name = "+val);
+		}
+	}
+}

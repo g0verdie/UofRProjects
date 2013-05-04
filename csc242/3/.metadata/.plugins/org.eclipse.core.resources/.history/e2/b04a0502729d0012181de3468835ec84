@@ -1,0 +1,108 @@
+import java.io.IOException;
+import java.util.*;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+
+/*
+ * driver class for exact inference.
+ * Contains all necessary information for calculating the probability vector of a query variable given evidence
+ * 
+ */
+public class EnumerationAskRG extends InferenceRG {
+	
+	public EnumerationAskRG(BNode query,BayesianNetworkRG bnet) 
+	{super(query,bnet);}
+	
+	public EnumerationAskRG(BNode query,ArrayList<String[]> evidence,BayesianNetworkRG bnet) 
+	{super(query,evidence,bnet);}
+	
+	public double getOneProbability() 
+	{return sumChain();}
+	
+	public double[] getAllProbability() {
+		double toReturn[] = new double[(query.getDomain().size())];
+		for(int i = 0; i < toReturn.length; i++) {
+			this.query.setVariable(this.query.getDomain().get(i));
+			toReturn[i] = enumerateAll(bnet.getNodes(),BNode.copyArray(this.evidenceVars));
+		}
+		return normalize(toReturn);
+	}
+	public double enumerateAll(ArrayList<BNode> vars,ArrayList<BNode> evidenceVars) {
+		if(vars.size() == 0) {
+			//System.out.println("returning 1");
+			return 1.0;
+
+		}
+		BNode currentVar = vars.get(0);
+		ArrayList<BNode> restVars = BNode.copyArray(vars);
+		restVars.remove(0);
+		
+		if(evidenceVars.contains(currentVar)) {
+			return currentVar.getCPT().findSpot(currentVar.getParents())*enumerateAll(restVars,evidenceVars);
+		}
+		else {
+			double sum = 0.0;
+			ArrayList<BNode> evAdd = BNode.copyArray(evidenceVars);
+			evAdd.add(currentVar);
+			for(int i = 0; i < currentVar.getDomain().size(); i++) {
+				//System.out.println(currentVar.getDomain().size());
+				//System.out.println(currentVar.getName());
+				currentVar.setVariable(currentVar.getDomain().get(i));
+				sum += currentVar.getCPT().findSpot(currentVar.getParents()) * enumerateAll(restVars,evAdd);
+			}
+			//System.out.println("probability from cpt- "+currentVar.getCPT().findSpot(currentVar.getParents()));
+			//System.out.println("sum- "+sum);
+			return sum;
+		}
+	}
+	
+	public double sumChain() {
+		//collect all unused variablse
+		ArrayList<BNode> unused = BNode.copyArray(bnet.getNodes());
+		if(evidenceVars != null)
+			unused.removeAll(evidenceVars);
+		unused.remove(query);
+		//System.out.println("unused size- "+unused.size());
+		
+		//get the used ones (evidence and query
+		ArrayList<BNode> used = BNode.copyArray(bnet.getNodes());
+		used.removeAll(unused);
+		//System.out.println("used size- "+used.size());
+		
+		//set up the tree
+		JointDistTree sumTree = new JointDistTree(unused,used);
+		System.out.println("sum probs");
+		double answer = sumTree.sumProbs(bnet);
+		return answer;
+	}
+	
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+		//set up network from file
+		XMLBIFParserRG parser = new XMLBIFParserRG();
+		BayesianNetworkRG network = parser.readNetworkFromFile(args[0]);
+		
+		//set up query variable
+		System.out.println("setting up query");
+		String[] qClause = args[1].split("=");
+		BNode query = network.getNodeByName(qClause[0]);
+		query.setVariable(qClause[1]);
+		
+		//deal with evidence variables, call the exact Inference appropriately
+		EnumerationAskRG ei;
+		System.out.println("setting up evidence");
+		if(args.length > 2) {
+			String[] eClauses = args[2].split(",");
+			ArrayList<String[]> eFinal = new ArrayList<String[]>();
+			for(int i = 0; i < eClauses.length; i++) {
+				String[] eClause = eClauses[i].split("=");
+				eFinal.add(eClause); 
+			}
+			ei = new EnumerationAskRG(query,eFinal,network); 
+		}
+		else
+			ei = new EnumerationAskRG(query,network);
+		//get the probability
+		double[] answer = ei.getAllProbability();
+		ei.printVector(answer);
+	}
+}

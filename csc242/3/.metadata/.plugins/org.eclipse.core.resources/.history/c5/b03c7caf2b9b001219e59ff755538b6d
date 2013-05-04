@@ -1,0 +1,137 @@
+import java.util.ArrayList;
+
+public class JointDistTree {
+	private JointDistNode head;
+	
+	public JointDistTree(ArrayList<BNode> vars) {
+		//initialize head
+		head = new JointDistNode(vars.get(0),"head");
+		//get a running list of parents going
+		ArrayList<String> parentList = new ArrayList<String>();
+		
+		for(int i = 0; i < vars.get(0).getVariable().getDomain().size(); i++) {
+			//System.out.println("size- "+vars.size());
+			ArrayList<String> domain = vars.get(0).getVariable().getDomain();
+			head.addChild(
+					addVar(
+							vars,
+							domain.get(i),
+							parentList));
+		}
+	}
+	
+	public JointDistNode addVar(
+			ArrayList<BNode> varsLeft,
+			String parentDomain,
+			ArrayList<String> parentList) {
+		
+		//create this node
+		JointDistNode currentNode = new JointDistNode(varsLeft.get(0),parentDomain);
+		//add parent domain to list of parents
+		parentList.add(parentDomain);
+		//remove a variable from the remaining variables
+		ArrayList<BNode> varsLeft1 = new ArrayList<BNode>();
+		varsLeft1.addAll(varsLeft);
+		varsLeft1.remove(0);
+		
+		//if no more variables, were done adding children
+		if(varsLeft.size() == 1) {
+			currentNode = new JointDistNode(varsLeft.get(0),parentDomain,parentList);
+			return currentNode;
+		}
+		//otherwise repeat for another layer (variable)
+		else {
+			for(int i = 0; i < varsLeft.get(0).getVariable().getDomain().size(); i++) {
+				//domain of next variable
+				ArrayList<String> domain = varsLeft1.get(0).getVariable().getDomain();
+				//make a new parentList (to avoid copying problems)
+				ArrayList<String> parentList1 = copyParents(parentList);
+				head.addChild(addVar(varsLeft1,domain.get(i),parentList1));
+			}
+		}
+			
+		return currentNode;
+	}
+	
+	public double sumProbs(BayesianNetworkRG bnet) {
+		double sum = 0;
+		ArrayList<JointDistNode> conjuncts = getLeaves();
+		for(int i = 0; i < conjuncts.size(); i++) {
+			sum += solveConjunct(conjuncts.get(i),bnet);
+		}
+		return sum;
+	}
+
+	public double solveConjunct(JointDistNode conjunct,BayesianNetworkRG bnet) {
+		double product = 1;
+		for(int i = 0; i < conjunct.parents.size(); i++){
+			System.out.println("on conjuct element- "+conjunct.name);
+			BNode current = bnet.getNodeByName(conjunct.parents.get(i));
+			current.getCPT();//.findSpot(current.getParents());
+		}
+		return product;
+	}
+	
+	public ArrayList<JointDistNode> getLeaves() {
+		ArrayList<JointDistNode> leaves = new ArrayList<JointDistNode>();
+		//System.out.println(head.children.size());
+		for(JointDistNode child : head.children) {
+			leaves.addAll(getLeavesRec(child));
+		}
+		return leaves;
+	}
+	public ArrayList<JointDistNode> getLeavesRec(JointDistNode node) {
+		//System.out.println("in getLeavesRec");
+		//System.out.println(node.children == null);
+		ArrayList<JointDistNode> leaves = new ArrayList<JointDistNode>();
+		if(node.children.isEmpty()) {
+			leaves.add(node);
+			return leaves;
+		}
+		else {
+			for(JointDistNode child : node.children) {
+				leaves.addAll(getLeavesRec(child));
+			}
+		}
+		return null;
+	}
+	
+	public ArrayList<String> copyParents(ArrayList<String> parents) {
+		ArrayList<String> copy = new ArrayList<String>();
+		for(int i = 0; i < parents.size(); i++)
+			copy.add(parents.get(i));
+		return copy;
+	}
+	
+	private class JointDistNode {
+		private String val;
+		private String name;
+		public ArrayList<JointDistNode> children;
+		public double probability;
+		public ArrayList<String> parents;
+		
+		public JointDistNode(BNode var,String val) {
+			this.val = val;
+			name = var.getName();
+			children = new ArrayList<JointDistNode>(var.getVariable().getDomain().size());
+			this.probability = -1;
+			this.parents = null;
+		}
+		
+		public JointDistNode(BNode var,String val,ArrayList<String> parentList) {
+			this.val = val;
+			name = var.getName();
+			children = new ArrayList<JointDistNode>(var.getVariable().getDomain().size());
+			this.probability = -1;
+			this.parents = parentList;
+		}
+		
+		public void addChild(JointDistNode child) {
+			this.children.add(child);
+		}
+		
+		public void addProb(double probability) {
+			this.probability = probability;
+		}
+	}
+}

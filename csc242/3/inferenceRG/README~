@@ -1,0 +1,7 @@
+TODO
+	1. represent bayesian networks in Java
+	2. exact inference algorithm
+		a. enumeration
+		b. variable elimination
+	3. approximate inference
+	

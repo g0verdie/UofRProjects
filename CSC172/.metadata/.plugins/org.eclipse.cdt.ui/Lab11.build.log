@@ -1,0 +1,5 @@
+
+**** Rebuild of configuration Debug for project Lab11 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\Lab11.o ..\src\Lab11.c

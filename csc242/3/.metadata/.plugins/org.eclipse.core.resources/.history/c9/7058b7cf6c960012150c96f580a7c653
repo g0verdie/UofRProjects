@@ -1,0 +1,22 @@
+import java.util.*;
+public class CPTRG {
+	private RandomVariableRG variable;
+	private ArrayList<RandomVariableRG> parents;
+	
+	public CPTRG(RandomVariableRG variable, ArrayList<RandomVariableRG> parents) {
+		this.variable = variable;
+		
+		if(parents != null)
+			this.parents.addAll(parents);
+		else
+			this.parents = null;
+	}
+	
+	public void setParents(RandomVariableRG parent) {
+		this.parents.add(parent);
+	}
+	
+	public String getName() {
+		return variable.getName();
+	}
+}

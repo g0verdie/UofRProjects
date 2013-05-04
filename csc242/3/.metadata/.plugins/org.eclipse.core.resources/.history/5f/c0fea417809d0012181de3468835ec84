@@ -1,0 +1,82 @@
+import java.io.IOException;
+import java.util.*;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+
+/*
+ * driver class for exact inference.
+ * Contains all necessary information for calculating the probability vector of a query variable given evidence
+ * 
+ */
+public class EnumerationAskRG extends InferenceRG {
+	
+	public EnumerationAskRG(BNode query,BayesianNetworkRG bnet) 
+	{super(query,bnet);}
+	
+	public EnumerationAskRG(BNode query,String evidence,BayesianNetworkRG bnet) 
+	{super(query,evidence,bnet);}
+	
+	
+	//gets the probability of each query value given evidence
+	public double[] getAllProbability() {
+		this.evidenceVars.add(this.query);
+		double toReturn[] = new double[(query.getDomain().size())];
+		//iterate through all possible values of query
+		for(int i = 0; i < toReturn.length; i++) {
+			this.query.setVariable(this.query.getDomain().get(i));
+			
+			toReturn[i] = enumerateAll(bnet.getNodes(),evidenceVars);
+		}
+		evidenceVars.remove(this.query);
+		return normalize(toReturn);
+	}
+	public double enumerateAll(ArrayList<BNode> vars,ArrayList<BNode> evidenceVars) {
+		if(vars.size() == 0) 
+			return 1.0;
+
+		
+		BNode currentVar = vars.get(0);
+		ArrayList<BNode> restVars = BNode.copyArray(vars);
+		restVars.remove(0);
+		
+		//if the variable is in the evidence, don't need to enumerate through all possible values
+		if(evidenceVars.contains(currentVar)) 
+			return currentVar.getCPT().findSpot(currentVar.getParents())*enumerateAll(restVars,evidenceVars);
+		
+		//if it's not used, then we do
+		else {
+			double sum = 0.0;
+			ArrayList<BNode> evAdd = BNode.copyArray(evidenceVars);
+			evAdd.add(currentVar);
+			for(int i = 0; i < currentVar.getDomain().size(); i++) {
+				currentVar.setVariable(currentVar.getDomain().get(i));
+				sum += currentVar.getCPT().findSpot(currentVar.getParents()) * enumerateAll(restVars,evAdd);
+			}
+			return sum;
+		}
+	}
+	
+	
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+		long start = System.currentTimeMillis();
+		
+		XMLBIFParserRG parser = new XMLBIFParserRG();
+		//make the bayesian network
+		BayesianNetworkRG network = parser.readNetworkFromFile(args[0]);
+		//get query
+		BNode query = network.getNodeByName(args[1]);
+		
+		EnumerationAskRG ei;
+		//setup evidence (if any)
+		if(args.length > 2) {
+			ei = new EnumerationAskRG(query,args[2],network); 
+		}
+		else
+			ei = new EnumerationAskRG(query,network);
+		
+		//get the probability
+		ei.answer = ei.getAllProbability();
+		ei.printQuery();
+		System.out.println("\n\n\n\ttime needed- "+(System.currentTimeMillis()-start)+"ms");
+	}
+}

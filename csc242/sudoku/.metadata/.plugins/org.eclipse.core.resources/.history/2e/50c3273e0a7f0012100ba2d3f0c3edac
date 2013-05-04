@@ -1,0 +1,96 @@
+import java.util.*;
+public class Solver {
+	private Sudoku board;
+	private String[][][] vars;
+	private int numVars;
+	
+	public Solver(Sudoku board){
+		this.board = board;
+		setUpVars(board);
+	}
+	
+	private void setUpVars(Sudoku board){
+		int var = 1;
+		vars = new String[board.size()][board.size()][board.size()];
+		numVars = (int) Math.pow(board.size,3);
+		for(int x = 0; x < board.size(); x++)
+			for(int y = 0; y < board.size(); y++)
+				for(int z = 0; z < board.size(); z++){
+					Integer xhold = x+1;
+					Integer yhold = y+1;
+					Integer zhold = z+1;
+					vars[x][y][z] = xhold.toString()+yhold.toString()+zhold.toString();
+				}
+	}
+	public ArrayList<String> allDiff(){
+		ArrayList<String> constraints = new ArrayList<String>();
+		
+		//all spots on board have one value
+		AssignValues(board,vars,constraints);
+		for(int i = 0; i < board.size(); i++){
+			//rows
+			allDiffArcs(board.getRow(i),constraints);
+		}
+		for(int i = 0; i < board.size(); i++){
+			allDiffArcs(board.getCol(i),constraints);
+		}
+		for(int i = 0; i < board.size(); i++){
+			//sub boards
+			allDiffArcs(board.getSub(i),constraints);
+		}
+		return constraints;
+	}
+	
+	//convert array of integers into binary arguments
+	public void allDiffArcs(int[][] list,ArrayList<String> constraints){
+		String[] varVals = new String[list.length];
+		for(int i = 0; i < list.length; i++) {
+			for(int j = 0; j < list.length; j++) 
+				varVals[j] = vars[list[j][0]][list[j][1]][i];
+			onlyOne(varVals,constraints);
+		}
+		/*for(int i = 0; i < list.length; i++){
+			for(int j = i+1; j < list.length; j++) {
+				for(int k = 0; k < vars[i][j].length; k++) {
+					String add1 = "-"+vars[list[i][0]][list[i][1]][k]+" "+vars[list[j][0]][list[j][1]][k];
+					String add2 = "-"+vars[list[j][0]][list[j][1]][k]+" "+vars[list[i][0]][list[i][1]][k];
+					if(!constraints.contains(add1))
+						constraints.add(add1);
+					if(!constraints.contains(add2))
+						constraints.add(add2);
+						
+				}
+			}
+		}*/
+	}
+	
+	public void AssignValues(Sudoku board, String[][][] vars, ArrayList<String> constraints) {
+		for(int x = 0; x < board.size(); x++)
+			for(int y = 0; y < board.size(); y++)
+			{
+					onlyOne(vars[x][y],constraints);
+
+					for(int z = 0; z <vars[x][y].length; z++) {
+						if(board.get(x,y)-1 == z)
+							constraints.add(vars[x][y][z].toString());
+				}
+			}
+	}
+	
+	public void onlyOne(String[] input, ArrayList<String> constraints){
+		String toAdd = "";
+		//constraints.add("-");//+vars[x][y][0]);
+		for(int i = 0; i < input.length; i++) {
+			toAdd += input[i].toString() + " ";
+		}
+		constraints.add(toAdd);
+		for(int i = 0; i < input.length; i++)
+			for(int j = i+1; j < input.length; j++){
+				constraints.add("-"+input[i].toString()+" -"+input[j].toString());
+			}
+	}
+	
+	public int numVars() {
+		return numVars;
+	}
+}

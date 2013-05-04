@@ -1,0 +1,111 @@
+import java.io.IOException;
+import java.util.*;
+
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+public class RejectionSampling extends InferenceRG{
+	
+	public RejectionSampling(BNode query,BayesianNetworkRG bnet) 
+	{super(query,bnet);}
+	
+	public RejectionSampling(BNode query,String evidence,BayesianNetworkRG bnet) 
+	{super(query,evidence,bnet);}
+	
+	//main solving algorithm
+	public double[] rejAsk() {
+		//set up answer vector
+		ArrayList<String> queryVals = query.getVariable().getDomain();
+		int[] foundEach = new int[queryVals.size()];
+		for(int i : foundEach)
+			i = 0;
+		
+		double[] probEach = new double[queryVals.size()];
+		//for a number of iterations, sample a value for each value and note the value of the query variable
+		for(int i = 0; i < 10000; i++) {
+				this.priorSample();
+				//note query variable
+				probEach[query.getDomain().indexOf(query.getVal())]++;
+		}
+		return normalize(probEach);
+	}
+	
+	//prior sampling- sets all variables
+	public void priorSample() {
+		ArrayList<BNode> nodes = BNode.copyArray(this.bnet.getNodes());
+		nodes.removeAll(this.evidenceVars);
+		for(int i = 0; i < nodes.size(); i++) {	
+			//EnumerationAskRG current = new EnumerationAskRG(nodes.get(i),this.bnet);
+			//System.out.println(nodes.get(i).getName());
+			//current.evidenceVars = nodes;//.get(i).getParents();
+			double[] currentProb = nodes.get(i).getCPT().findSpots(nodes.get(i));
+			if(nodes.get(i).getName().equals("B")) {
+				for(int j = 0; j < nodes.get(i).getParents().size(); j++)
+					System.out.println(nodes.get(i).getParents().get(j).getVal());
+				for(double d : currentProb)
+					System.out.print(d+" ");
+				System.out.println();
+			}
+			int great = greatest(currentProb);
+			nodes.get(i).setVariable(nodes.get(i).getDomain().get(great));
+		}
+	}
+	
+	//gets children of a node
+	public ArrayList<BNode> getChildren(BNode parent) {
+		ArrayList<BNode> nodes = bnet.getNodes();
+		ArrayList<BNode> children = new ArrayList<BNode>();
+		for(int i = 0; i < nodes.size(); i++) {
+			if(!nodes.get(i).getName().equals(parent.getName()) && nodes.get(i).getParents().contains(parent)) {
+				children.add(nodes.get(i));
+				}
+		}
+		return children;
+	}
+
+	//returns a random spot in the vector provided, with a bias towards more likely outcomes
+	public int greatest(double[] vector) {
+		Random random = new Random();
+		
+		vector = normalize(vector);
+		double[][] range = new double[vector.length][2];
+		//give each spot a range
+		double base = 0;
+		for(int i = 0; i < range.length; i++) {
+			range[i][0] = base;
+			range[i][1] = base + vector[i];
+			base += vector[i];
+		}
+		
+		double rn = random.nextDouble();
+		//double greatest = 0;
+		int index = 0;
+		for(int i = 0; i < vector.length; i++) {
+			if(rn >= range[i][0] && rn < range[i][1])
+				index = i;
+		}
+		return index;
+	}
+	
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+		long start = System.currentTimeMillis();
+		XMLBIFParserRG parser = new XMLBIFParserRG();
+		//create network
+		BayesianNetworkRG network = parser.readNetworkFromFile(args[0]);
+		
+		//get query
+		BNode query = network.getNodeByName(args[1]);
+		
+		RejectionSampling rs;
+		//set up evidence (if any)
+		if(args.length > 2) {
+			rs = new RejectionSampling(query,args[2],network);
+		}
+		else{
+			rs = new RejectionSampling(query,network);
+		}
+		//get answer
+		rs.answer = rs.rejAsk();
+		rs.printQuery();
+		System.out.println("\n\n\n\ttime needed- "+(System.currentTimeMillis()-start)+"ms");
+	}
+}

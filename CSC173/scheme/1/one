@@ -1,0 +1,97 @@
+;Part 1.2
+(display "part 1.2")
+(newline)
+(define a 1)
+(define b 2)
+
+;min
+(define (minimum x y)
+  (if (> x y)
+   y
+   x
+  )  
+)
+(display "minimum of 1 and 2- ")
+(minimum a b)
+(newline)
+
+;max
+(define (maximum x y)
+  (if (> x y)
+   x
+   y
+  )  
+)
+(display "maximum of 1 and 2- ")
+(maximum a b)
+(newline)
+
+(define l (cons 'this null))
+
+;1.3
+(display "1.3")
+(newline)
+
+(define (li? i) 
+   (or 
+    (pair? i) 
+    (null? i)
+   )
+)
+(display "li? with '(8 4 3 2)- ")
+(li? '(8 4 3 2))
+(display "li? with 4- ")
+(li? 4)
+(newline)
+
+;1.4
+(display"1.3")
+(newline)
+
+(define (propli? i) 
+   (or 
+    (and
+       (pair? i)
+       (equal? (car(reverse i)) '())
+    )
+    (null? i)
+   )
+)
+(display "propli? (8 3 4 5)- ")
+(propli? '(8 3 4 5))
+(display "propli? (8 3 4 5 ())- ")
+(propli? '(8 3 4 5 ()))
+(newline)
+
+;1.5
+(display "1.5")
+(newline)
+
+(define (makeList n obj)
+  (if (= n 0)
+      '()
+      (cons obj (makeList (- n 1) obj))
+  )
+)
+(display "makeList 4 5- ")
+(makeList 4 5)
+(newline)
+
+;1.6
+(display "1.6")
+(newline)
+
+(define (e? num)
+  (if (= num 0)
+      "even"
+      (o? num)
+  )
+)
+
+(define (o? num)
+  (if (= num 1)
+      "odd"
+      (e? (- num 2))
+  )
+)
+(display (e? 3))

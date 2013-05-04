@@ -1,0 +1,34 @@
+import java.util.*;
+/*
+ * represents a bayesian network. Nodes are BNodes
+ */
+public class BayesianNetworkRG {
+	private ArrayList<BNode> BNodes;
+	//private ArrayList<Integer> connectors;
+	
+	public BayesianNetworkRG() {
+		BNodes = new ArrayList<BNode>();
+		//connectors = new ArrayList<Integer>();
+	}
+	
+	public void addBNode(BNode BNode) {
+		BNodes.add(BNode);
+	}
+	
+	public BNode getNodeByName(String name) {
+		for(BNode c : BNodes) {
+			if(c.getName().equals(name))
+				return c;
+		}
+		return null;
+	}
+	public ArrayList<BNode> getNodes() {
+		return BNodes;
+	}
+	
+	public void print() {
+		for(BNode c : BNodes) {
+			c.print();
+		}
+	}
+}

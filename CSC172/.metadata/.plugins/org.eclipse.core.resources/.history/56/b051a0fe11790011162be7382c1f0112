@@ -1,0 +1,23 @@
+public class Heap implements MyHeap
+{
+	private int length;
+	public Comparable data[]; 
+	
+	public Heap(int l)
+	{
+		length = l;
+		data = new Comparable[length];
+	}
+	
+	public int size()
+	{return length;}
+	
+	public boolean isEmpty()
+	{return data[0] == null;}
+	
+	public void insert(Comparable o)
+	{}
+	
+	public Comparable deleteMin()
+	{return 0;}
+}

@@ -1,0 +1,48 @@
+public class Heap implements MyHeap
+{
+	private int length;
+	public Comparable data[]; 
+	
+	public Heap(int l)
+	{
+		length = l;
+		data = new Comparable[length];
+	}
+	
+	public int size()
+	{return length;}
+	
+	public boolean isEmpty()
+	{return data[0] == null;}
+	
+	public void insert(Comparable o)
+	{
+		for(int i = 0; i < length; i ++)
+			if(data[i] == null)
+			{
+				data[i] = o;
+				bubbleup(o,i);
+				return;
+			}
+	}
+	
+	public Comparable deleteMin()
+	{return 0;}
+	
+	public void printHeap()
+	{
+		for(int i = 0; i < length; i ++)
+			System.out.println(data[i]);
+	}
+	
+	private void bubbleup(Comparable o, int index)
+	{
+		if(o.compareTo(data[(int) index/2]) == -1)
+		{
+			Comparable temp = o;
+			data[index] = data[(int) index/2];
+			data[(int) index/2] = temp;
+			bubbleup(o, (int) index/2);
+		}
+	}
+}

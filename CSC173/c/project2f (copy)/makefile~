@@ -1,0 +1,6 @@
+-include FEV.h
+-include FEVtypes.h
+-include matrix/matrix.h
+include matrix/matrix_types.h
+all:
+	gcc FEV.c file2struct.c put-get_put.c struct2file.c tetra.c /matrix/matrix.c 

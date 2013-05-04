@@ -1,0 +1,14 @@
+/*
+ * File: stylesheet.css
+ * Creator: George Ferguson
+ * Created: Wed Mar  7 17:51:52 2012
+ * Time-stamp: <Wed Mar  7 18:04:55 EST 2012 ferguson>
+ */
+
+code {
+    font-size: 115%;
+}
+
+li {
+    margin-bottom: 0.5em;
+}

@@ -1,0 +1,14 @@
+noun(apple).
+noun(boy).
+noun(girl).
+noun(government).
+noun(watermelon).
+det(a).
+det(the).
+verb(conscript).
+verb(like).
+verb(run).
+beVerb(is).
+beVerb(are).
+adj(evil).
+rel(that,whom).

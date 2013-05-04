@@ -1,0 +1,14 @@
+import java.util.*;
+public class ExactInferenceRG {
+	
+	RandomVariableRG query;
+	ArrayList<String[]> evidence;
+	BayesianNetworkRG bnet;
+	
+	public ExactInference(RandomVariableRG query,ArrayList<String[]> evidence,BayesianNetworkRG bnet) {
+		this.query = query;
+		this.evidence = evidence;
+		this.bnet = bnet;
+	}
+
+}

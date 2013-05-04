@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int strcmp2(char*s, char*t);
+int strcat2(char *s,char *t);
+
+int main(int argc, char * argv [] )
+{
+	/*int i;
+	for(i = 0; i < argc; i++)
+	{
+		puts(argv[i]);
+	}
+
+	char *any = "any";
+	char *this = "this";
+	printf("%d",strcmp2(any,this));*/
+
+	char *any2 = "any";
+	char *this2 = "any";
+	//char *x;
+	strcat2(any2,this2);
+	/*char* i;
+	i = x;
+	char* j;
+	j = i+6;
+	while(i < j)
+	{
+		printf("hello");
+		printf("%c",*i);
+		i++;
+	}*/
+
+	return 1;
+}
+
+int strcmp2(char *s, char *t)
+{
+	for(; *s == *t; s++,t++)
+	{
+		if(*s == '\0')
+			return 0;
+	}
+	return *s - *t;
+
+}
+
+int strcat2(char *s, char *t)
+{
+	char* shold;
+	shold = s;
+	while(*s != '\0')
+	{
+		s++;
+	}
+	while(*t != '\0')
+	{
+		*s = *t;
+		//printf("%c",*s);
+		s++;
+		t++;
+	}
+	char *i = shold;
+	char *shold6;
+	shold6 = shold + 6;
+	while(i != shold6)
+		{
+			printf("%c",i);
+			printf("hi");
+			i++;
+		}
+	return 1;
+}
+

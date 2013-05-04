@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 8 elements to &apos;lab19/src&apos;&#x0D;&#x0A;- Original project: &apos;lab19&apos;&#x0D;&#x0A;- Destination element: &apos;lab19/src&apos;&#x0D;&#x0A;- Original elements:&#x0D;&#x0A;     t4.txt&#x0D;&#x0A;     t3.txt&#x0D;&#x0A;     t1.txt&#x0D;&#x0A;     920.txt&#x0D;&#x0A;     t2.txt&#x0D;&#x0A;     t5.txt&#x0D;&#x0A;     OUTPUT.TXT&#x0D;&#x0A;     README&#x0D;&#x0A;- Update references to refactored element" description="Move files" destination="/src" element1="t4.txt" element2="t3.txt" element3="t1.txt" element4="920.txt" element5="t2.txt" element6="t5.txt" element7="OUTPUT.TXT" element8="README" files="8" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1334618667472" units="0" version="1.0"/>
+</session>

@@ -1,0 +1,21 @@
+Dan Scarafoni
+Week 1 Scheme
+dscarafo@u.rochester.edu
+CSC173
+
+Files
+	one- contains all scheme and project parts
+	annt- the text annotation of project 1
+to run
+	1. open drracket (type 'drracket' at the command prompt)
+	2. open my file "one"
+	3. press "run" (all parts of the project will execute)
+
+functions
+	(minimum x y)- returns the minimum of x and y
+	(maximum x y)- returns the maximum of x and y
+	(li? i)- returns whether i is a list (or the null list)
+	(propli? i)- returns whether i is a proper list (ends with ()')
+	(makeList n obj)- returns a list of obj repeated n times, ends with ()'
+	(e? x)/(o? x)- determines whether x is odd or even and prints the result
+		(e? x) is the top level function, run it to test numbers parity

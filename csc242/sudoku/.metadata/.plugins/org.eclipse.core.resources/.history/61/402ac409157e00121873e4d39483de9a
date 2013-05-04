@@ -1,0 +1,63 @@
+import java.util.*;
+public class Solver {
+	private Sudoku board;
+	private Integer[][][] vars;
+	
+	public Solver(Sudoku board){
+		this.board = board;
+		setUpVars(board);
+	}
+	
+	private void setUpVars(Sudoku board){
+		int var = 1;
+		vars = new Integer[board.size()][board.size()][board.size()+1];
+		for(int x = 0; x < board.size(); x++)
+			for(int y = 0; y < board.size(); y++)
+				for(int z = 0; z < board.size(); z++)
+					vars[x][y][z] = var++;
+	}
+	public ArrayList<String> allDiff(){
+		ArrayList<String> constraints = new ArrayList<String>();
+		
+		//all spots on board have one value
+		AssignValues(board,vars,constraints);
+		for(int i = 0; i < board.size(); i++){
+			
+			/*System.out.println("rows");
+			board.getRow(i);
+			System.out.println("\n\n\ncols");
+			board.getCol(i);
+			System.out.println("\n\n\nsubs");
+			board.getSub(i);*/
+			
+			//rows
+			allDiffArcs(board.getRow(i),constraints);
+			//cols
+			allDiffArcs(board.getCol(i),constraints);
+			//sub boards
+			allDiffArcs(board.getSub(i),constraints);
+		}
+		return constraints;
+	}
+	
+	//convert array of integers into binary arguments
+	public void allDiffArcs(int[][] list,ArrayList<String> constraints){
+		for(int i = 0; i < list.length; i++)
+			for(int j = i; j < list.length; j++){
+				//String first = list[i][0]+""+list[i][1]+""+list[i][2];
+				//String last = list[j][0]+""+list[j][1]+""+list[j][2];
+				constraints.add("-"+vars[list[i][0]][list[i][1]][list[i][1]]+" v -"+vars[list[j][0]][list[j][1]][list[j][1]]);
+			}
+	}
+	
+	public void AssignValues(Sudoku board, Integer[][][] vars, ArrayList<String> constraints) {
+		for(int x = 0; x < board.size(); x++)
+			for(int y = 0; y < board.size(); y++)
+				for(int z = 0; z < board.size(); z++) {
+					if(board.get(x,y) == z)
+						constraints.add(vars[x][y][z].toString());
+					else
+						constraints.add("-"+vars[x][y][z].toString());
+				}
+	}
+}

@@ -1,0 +1,19 @@
+public class Main 
+{
+	public static void main(String[] args)
+	{
+		//part 1
+		Heap heap = new Heap(2);
+		System.out.println("is empty- "+heap.isEmpty());
+		System.out.println("size- "+heap.size());
+		
+		//part 2
+		heap.insert(32);
+		heap.insert(22);
+		heap.printHeap();
+		
+		//part 3
+		heap.insert(10);
+		heap.printHeap();
+	}
+}

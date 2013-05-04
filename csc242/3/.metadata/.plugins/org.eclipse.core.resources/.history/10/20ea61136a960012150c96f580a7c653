@@ -1,0 +1,12 @@
+public class CPTRG {
+	private RandomVariableRG variable;
+	private RandomVariableRG[] parents;
+	
+	public CPTRG(RandomVariableRG variable, RandomVariableRG[] parents) {
+		this.variable = variable;
+		if(parents != null)
+			this.parents = parents;
+		else
+			this.parents = null;
+	}
+}

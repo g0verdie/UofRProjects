@@ -1,0 +1,15 @@
+Dan Scarafoni
+dscarafo@u.rochester.edu
+Prolog Weeks 3 and 4
+
+Files- three.pl- contains all major functions
+to test parser- after opening swipl in command prompt and consulting [three]
+	s([sentence]), where sentence is an english sentence MAKE SURE THAT IT IS A LIST OF WORDS SEPARATED BY COMMAS	
+	s([the,boy,runs]) will parse the sentence "the boy runs"
+
+To test quantified parser/translator- similar syntax to above, but use quantifiers "all" and "sum", and uses funtion s2
+	s2([sentence]), s([sentence]), where sentence is an english sentence MAKE SURE THAT IT IS A LIST OF WORDS SEPARATED BY COMMAS	
+	s2([all,boys,run]) will parse and translate the sentence "all boys run".
+
+
+IMPORTANT- THE WORD 'IS' MUST BE ENTERED AS 'ISS' FOR SENTENCES. THIS CHANGE WAS DONE TO AVOID CONFUSION IN CODE BETWEEN THE ENGLISH WORD AND THE MATHEMATICAL OPERATOR IN PROLOG

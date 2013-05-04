@@ -1,0 +1,82 @@
+(define (nqueens n)
+  ;initialize board
+  (let ( (board (make-vector n (* 10 n))))
+    ;run through colums, start recursing
+    (colRecurse board 0 n)
+    (display board)
+    )
+  )
+
+(define (colRecurse board col n)
+  (display "colrecurse")(newline)
+  (if (= col n)
+      ;if we're at the end, return the board
+      #t
+      ;else, go through each row and find an open spot
+      (begin
+        (do ((i 0 (+ i 1))) ((and (>= i (vector-length board)) (not (eqv? n col))))
+          (rowRecurse board col i n)
+          )
+        )
+      )
+  )
+
+(define (rowRecurse board col row n)
+  (display "row recurse")(newline)
+  (if (eqv? row n)
+      (begin
+      #f
+      )
+      (begin
+        ;if no conflict, place
+        (display "checking horiz and diag")(newline)
+        (if (and (checkRow board row 0 n) (checkDiag board row col))
+            (begin
+              (vector-set! board col row)
+              (colRecurse board (+ col 1) n)
+              )
+            ;else, go to the next row
+            (begin
+              (display "no open slot")(newline)
+              (rowRecurse board col (+ row 1) n)
+              )
+            )
+        )
+      )
+  )
+;check to see if there's another rowNum in board
+(define (checkRow board row i n)
+  (display "checkRow")(newline)
+  (if (eq? i n)
+      (begin
+        (display "pass")(newline)
+        #t
+        )
+      (if (eq? (vector-ref board i) row)
+          (begin
+            (display "fail")(newline)
+            #f
+            )
+          (checkRow board row (+ i '1) n)
+          )
+      )
+  )
+(define (checkDiag board row col)
+  (let ((conflict #t))
+    (do ((i 0 (+ i 1))) ((>= i (vector-length board)))
+      (begin
+        ;(display (vector-ref board i))(newline)(newline)
+        (newline)
+        (if (or (eqv?  (+ row (abs (- col i))) (vector-ref board i)) (eqv? (- row (abs (- col i))) (vector-ref board i)))
+            (begin
+              (set! conflict #f)
+            )
+            )
+        )
+      )
+    (display "it worked? ")(display conflict)(newline)(newline)
+    conflict
+    )
+  )
+
+(nqueens 4)

@@ -1,0 +1,34 @@
+import java.io.IOException;
+import java.util.*;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+public class InferenceRG {
+	
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+		//set up network
+		XMLBIFParserRG parser = new XMLBIFParserRG();
+		BayesianNetworkRG network = parser.readNetworkFromFile(args[0]);
+		
+		//get query
+		System.out.println("setting up query");
+		String[] qClause = args[1].split("=");
+		RandomVariableRG query = network.getNodeByName(qClause[0]).getVariable();
+		query.setValue(qClause[1]);
+		
+		//deal with evidence variables
+		System.out.println("setting up evidence");
+		String[] eClauses = args[2].split(",");
+		ArrayList<String[]> eFinal = new ArrayList<String[]>();
+		for(int i = 0; i < eClauses.length; i++) {
+			String[] eClause = eClauses[i].split("=");
+			eFinal.add(eClause); 
+		}
+		
+		System.out.println("\n\nFINAL BNET\n\n");
+		network.print();
+			
+		System.out.println("finding inference");
+		ExactInferenceRG ei = new ExactInferenceRG(query,eFinal,network); 
+		System.out.println(ei.getProbability());
+	}
+}

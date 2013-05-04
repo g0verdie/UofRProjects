@@ -1,0 +1,10 @@
+make finite state machine scanner
+make recursive descent parser
+make evaluator
+
+math expressions
+	seperated by ';'
+	output is '=='
+
+	ex.- 4+ (25/5);
+	== 9.00

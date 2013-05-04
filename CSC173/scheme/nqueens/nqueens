@@ -1,0 +1,83 @@
+#lang racket
+
+(define (nqueens n)
+  ;initialize board
+  (let ( (board (make-vector n (* n 2))))
+    ;run through colums, start recursing
+    (testSpot board 0 0 n)
+    ;(display board)
+    )
+  )
+
+(define (testSpot board col row n)
+  (display "col- ")(display col)(newline)
+  (display "row- ")(display row)(newline)
+  (display board)(newline)(newline)
+  ;if we're done
+  (if (= col n)
+      board
+      (begin
+        ;check if the space is free
+        (if (and (checkRow board row 0 n) (checkDiag board row col) (< row n))
+            ;if it is, drop and move on to the next column
+            (begin
+              (vector-set! board col row)
+              (testSpot board (+ col 1) 0  n)
+              )
+            ;if it's not
+            (begin
+              ;if we're at the end of the row, backtrack
+              (if (> row (- n 1))
+                  (begin
+                    (vector-set! board col (* n 2))
+                    (testSpot board (- col 1) (+ (vector-ref board (- col 1)) 1) n)
+                    )
+                  ;else just go to the next row
+                  (testSpot board col (+ row 1) n)
+                  )
+              )
+            )
+        )
+      )
+  )
+
+;check to see if there's another rowNum in board
+(define (checkRow board row i n)
+  ;(display "checkRow")(newline)
+  (if (eq? i n)
+      (begin
+        ;(display "pass")(newline)
+        #t
+        )
+      (if (= (vector-ref board i) row)
+          (begin
+            ;(display (vector-ref board i))
+            ;(display row)
+            #f
+            ;(display "fail")(newline)
+            )
+          (checkRow board row (+ i '1) n)
+          )
+      )
+  )
+(define (checkDiag board row col)
+  (let ((conflict #t))
+    (do ((i 0 (+ i 1))) ((>= i (vector-length board)))
+      (begin
+        ;(display (+ row (abs (- col i))))(newline)(newline)
+        ;(newline)
+        (if (and (or (=  (+ row (abs (- col i))) (vector-ref board i)) (eqv? (- row (abs (- col i))) (vector-ref board i))) (not (eqv? i col)))
+            (begin
+              ;(display i)
+              (set! conflict #f)
+            )
+            '()
+            )
+        )
+      )
+    ;(display "it worked? ")(display conflict)(newline)(newline)
+    conflict
+    )
+  )
+
+(nqueens 8)

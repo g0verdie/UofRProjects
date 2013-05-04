@@ -1,0 +1,10 @@
+S(Phrase) --> Quant(quant)(Var NP(Phrase,VP,SP) Con(quant) VP(VP))
+
+NP --> Noun(Var)
+
+VP --> Verb(Var)
+   --> Verb(Var,Quant(Var2 NP)
+   --> BeVerb(Var) & Adj(Var)
+
+RELCL --> & VP
+      --> & Quant(quant)((Var2 NP Con(quant) Verb(Var2))

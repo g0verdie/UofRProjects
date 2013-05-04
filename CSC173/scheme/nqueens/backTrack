@@ -1,0 +1,93 @@
+#lang racket
+(define count 0)
+(define (nqueens n)
+  ;initialize board
+  (let ( (board (make-vector n (* n 2))))
+    ;run through colums, start recursing
+    (testSpot board 0 0)
+    )
+  )
+
+(define (testSpot board col row)
+  ;(display "col- ")(display col)(newline)
+  ;display "row- ")(display row)(newline)
+  ;(display board)(newline)(newline)
+  ;if we're done
+  (if (= col (vector-length board))
+      (begin
+        (display count)(newline)
+        board
+        )
+      (begin
+        ;check if the space is free
+        (if (and (checkRow board row col) (checkDiag board row col) (< row (vector-length board)))
+            ;if it is, drop and move on to the next column
+            (begin
+              (vector-set! board col row)
+              (testSpot board (+ col 1) 0)
+              )
+            ;if it's not
+            (begin
+              ;if we're at the end of the row, backtrack
+              (if (> row (- (vector-length board) 1))
+                  (begin
+                    (vector-set! board col (* (vector-length board) 2))
+                    (testSpot board (- col 1) (+ (vector-ref board (- col 1)) 1))
+                    )
+                  ;else just go to the next row
+                  (testSpot board col (+ row 1))
+                  )
+              )
+            )
+        )
+      )
+  )
+
+;check to see if there's another rowNum in board
+(define (checkRow board row col)
+  (let ((conflicts 0))
+    (do ((i 0 (+ i 1))) ((>= i (vector-length board)))
+      (set! count (+ count 1))
+      (if (and (eqv? row (vector-ref board i)) (not (= i col)))
+          (begin
+            ;(display count)(newline)
+            (set! conflicts (+ conflicts 1))
+            )
+          '()
+          )
+      )
+    (if (> conflicts 0)
+        #f
+        #t
+        )
+    )
+  )
+
+(define (checkDiag board row col)
+  (let ((conflict #t))
+    (do ((i 0 (+ i 1))) ((>= i (vector-length board)))
+      (begin
+        (set! count (+ count 1))
+        (if (and (or (=  (+ row (abs (- col i))) (vector-ref board i)) (eqv? (- row (abs (- col i))) (vector-ref board i))) (not (eqv? i col)))
+            (begin
+              (set! count (+ count 1))
+              (set! conflict #f)
+              )
+            '()
+            )
+        )
+      )
+    conflict
+    )
+  )
+
+(define (runTest n)
+  (do ((i 4 (+ i 1))) ((>= i n))
+    (display i)(display "- ")
+    (nqueens i)
+    (newline)
+    (set! count 0)
+    )
+  )
+
+(runTest 20)

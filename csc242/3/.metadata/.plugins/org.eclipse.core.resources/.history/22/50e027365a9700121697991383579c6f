@@ -1,0 +1,80 @@
+import java.util.*;
+public class CPTRG {
+	private CPTRGNode head;
+
+	public CPTRG(ArrayList<RandomVariableRG> vars) {
+		//initialize head
+		head = new CPTRGNode(vars.get(0),"head");
+		//for the domain of the first variable, create a child
+		for(int i = 0; i < vars.get(0).getDomain().size(); i++) {
+			//remove the current variable
+			ArrayList<RandomVariableRG> varsLeft = vars;
+			varsLeft.remove(0);
+
+			head.addChild(addVar(varsLeft,vars.get(0).getDomain().get(i)));
+		}
+	}
+	
+	public CPTRGNode addVar(ArrayList<RandomVariableRG> varsLeft,String parentDomain) {
+		CPTRGNode currentNode = new CPTRGNode(varsLeft.get(0),parentDomain);
+		//if no more variables, were done adding children
+		if(varsLeft.size() < 1)
+			return currentNode;
+		//otherwise repeat for another layer (variable)
+		else {
+			for(int i = 0; i < varsLeft.size(); i++) {
+				ArrayList<RandomVariableRG> varsLeft1 = varsLeft;
+				varsLeft1.remove(0);
+
+				head.addChild(addVar(varsLeft,varsLeft.get(0).getDomain().get(i)));
+			}
+		}
+			
+		return currentNode;
+	}
+	
+	public ArrayList<CPTRGNode> getChildren() {
+		ArrayList<CPTRGNode> children = new ArrayList<CPTRGNode>();
+		for(CPTRGNode child : head.children) {
+			children.addAll(getChildrenRec(child));
+		}
+		return children;
+	}
+	public ArrayList<CPTRGNode> getChildrenRec(CPTRGNode node) {
+		ArrayList<CPTRGNode> children = new ArrayList<CPTRGNode>();
+		if(node.children == null) {
+			children.add(node);
+			return children;
+		}
+		else {
+			for(CPTRGNode child : node.children) {
+				children.addAll(node.getChildrenRec(child));
+			}
+		}
+	}
+	
+	public void addProbs(ArrayList<Integer> probabilities) {
+		
+	}
+
+	private class CPTRGNode {
+		private String val;
+		private String name;
+		public ArrayList<CPTRGNode> children;
+		private int probability;
+		
+		public CPTRGNode(RandomVariableRG var,String val) {
+			this.val = val;
+			name = var.getName();
+			children = new ArrayList<CPTRGNode>(var.getDomain().size());
+		}
+		
+		public void addChild(CPTRGNode child) {
+			this.children.add(child);
+		}
+		
+		public void addProb(int probability) {
+			this.probability = probability;
+		}
+	}
+}

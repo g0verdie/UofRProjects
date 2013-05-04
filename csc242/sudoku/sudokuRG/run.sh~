@@ -1,0 +1,7 @@
+#!/bin/bash
+cd bin
+java Sudoku example-4.1.sdk
+cd ..
+MiniSat_v1.14_linux bin/toTranslate.txt bin/translated.txt
+cd bin
+java Sudoku example-4.2.sdk

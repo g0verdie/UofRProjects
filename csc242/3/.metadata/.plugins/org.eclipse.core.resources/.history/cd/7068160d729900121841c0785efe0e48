@@ -1,0 +1,12 @@
+import java.io.IOException;
+import java.util.*;
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+public class InferenceRG {
+	
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+		String file = "problems/"+args[0];
+		XMLBIFParserRG parser = new XMLBIFParserRG();
+		BayesianNetworkRG network = parser.readNetworkFromFile(file);
+	}
+}

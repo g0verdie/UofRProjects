@@ -1,0 +1,28 @@
+import java.io.IOException;
+import java.util.*;
+
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+public class InferenceRG {
+	
+	BNode query;
+	ArrayList<String[]> evidence;
+	ArrayList<BNode> evidenceVars;
+	BayesianNetworkRG bnet;
+	
+	public InferenceRG(BNode query,ArrayList<String[]> evidence,BayesianNetworkRG bnet) {
+		this.query = query;
+		this.bnet = bnet;
+		this.evidence = evidence;
+		this.setUpEvidence();
+	}
+	
+	public void setUpEvidence() {
+		evidenceVars = new ArrayList<BNode>();
+		for(String[] clause : evidence) {
+			BNode current = bnet.getNodeByName(clause[0]);
+			current.setVariable(clause[1]);
+			evidenceVars.add(current);
+		}
+	}
+}

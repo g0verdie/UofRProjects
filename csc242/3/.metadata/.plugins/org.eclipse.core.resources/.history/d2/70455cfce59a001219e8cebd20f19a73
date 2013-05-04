@@ -1,0 +1,66 @@
+import java.util.*;
+public class BNode {
+	private RandomVariableRG variable;
+	private ArrayList<BNode> parents = null;
+	private CPTRG cpt;
+	
+	
+	public BNode(RandomVariableRG variable) {
+		//set variable, parents
+		this.variable = variable;
+		this.parents = new ArrayList<BNode>();
+	}
+	public void addProbs(String str)
+	{
+		StringTokenizer tokens = new StringTokenizer(str);
+		ArrayList<Double> probList = new ArrayList<Double>();
+		while (tokens.hasMoreTokens()) {
+		    String token = tokens.nextToken();
+		    probList.add(Double.parseDouble(token));
+		}
+		cpt.addProbs(probList);
+	}
+	/*public BNode(RandomVariableRG variable) {
+		this.variable = variable;
+	}*/
+	
+	public void addParents(ArrayList<BNode> parents) {
+		for(BNode p : parents)
+			this.parents.add(p);
+	}
+	
+	public void makeCPT() {
+		//collect all relavent variables
+		ArrayList<RandomVariableRG> totalVar = new ArrayList<RandomVariableRG>();
+		for(BNode node : this.parents) {
+			totalVar.add(node.getVariable());
+		}
+		totalVar.add(this.variable);
+		//use them to make a cpt
+		//System.out.println("totalVar- "+totalVar.size());
+		//System.out.println("variable "+totalVar.get(0));
+		cpt = new CPTRG(totalVar);
+	}
+	public String getName() {
+		return variable.getName();
+	}
+	public RandomVariableRG getVariable() {
+		return variable;
+	}
+	public void setVariable(String val)
+	{
+		variable.setValue(val);
+	}
+	
+	public void print() {
+		variable.print();
+		if(parents.size() == 0)
+			System.out.println("no parents");
+		else {
+			System.out.println("parents: ");
+			for(BNode p : parents) {
+				System.out.println("\t"+p.getName()+", ");
+			}
+		}
+	}
+}

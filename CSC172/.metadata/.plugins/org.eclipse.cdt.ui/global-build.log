@@ -1,0 +1,205 @@
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c:19:1: error: unknown type name 'bool'
+..\src\lab12.c:66:1: error: unknown type name 'bool'
+..\src\lab12.c:66:6: error: conflicting types for 'lookUp'
+..\src\lab12.c:19:6: note: previous declaration of 'lookUp' was here
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:86:1: warning: control reaches end of non-void function [-Wreturn-type]
+Build error occurred, build is stopped
+Time consumed: 216  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c:66:9: error: conflicting types for 'lookUp'
+..\src\lab12.c:19:9: note: previous declaration of 'lookUp' was here
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:84:1: warning: control reaches end of non-void function [-Wreturn-type]
+Build error occurred, build is stopped
+Time consumed: 196  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c:66:9: error: conflicting types for 'lookUp'
+..\src\lab12.c:19:9: note: previous declaration of 'lookUp' was here
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:84:1: warning: control reaches end of non-void function [-Wreturn-type]
+Build error occurred, build is stopped
+Time consumed: 200  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'main':
+..\src\lab12.c:30:2: warning: passing argument 2 of 'lookUp' from incompatible pointer type [enabled by default]
+..\src\lab12.c:19:9: note: expected 'struct Node *' but argument is of type 'struct Node **'
+..\src\lab12.c: At top level:
+..\src\lab12.c:67:9: error: conflicting types for 'lookUp'
+..\src\lab12.c:19:9: note: previous declaration of 'lookUp' was here
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:85:1: warning: control reaches end of non-void function [-Wreturn-type]
+Build error occurred, build is stopped
+Time consumed: 187  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:85:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 367  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'main':
+..\src\lab12.c:30:22: error: expected ')' before ';' token
+..\src\lab12.c:32:1: warning: passing argument 1 of 'printf' makes pointer from integer without a cast [enabled by default]
+c:\mingw\bin\../lib/gcc/mingw32/4.6.1/../../../../include/stdio.h:294:37: note: expected 'const char *' but argument is of type 'BOOLEAN'
+..\src\lab12.c:32:1: error: expected ';' before '}' token
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:85:1: warning: control reaches end of non-void function [-Wreturn-type]
+..\src\lab12.c: In function 'main':
+..\src\lab12.c:32:1: warning: control reaches end of non-void function [-Wreturn-type]
+Build error occurred, build is stopped
+Time consumed: 581  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'main':
+..\src\lab12.c:30:2: warning: passing argument 1 of 'printf' makes pointer from integer without a cast [enabled by default]
+c:\mingw\bin\../lib/gcc/mingw32/4.6.1/../../../../include/stdio.h:294:37: note: expected 'const char *' but argument is of type 'BOOLEAN'
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:85:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 420  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:85:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 325  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:85:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 331  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:86:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 382  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:86:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 431  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:88:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 319  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:92:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 431  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:93:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 320  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:94:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 445  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab12.o ..\src\lab12.c
+..\src\lab12.c: In function 'lookUp':
+..\src\lab12.c:95:1: warning: control reaches end of non-void function [-Wreturn-type]
+gcc -o lab12.exe src\lab12.o
+Build complete for project lab12
+Time consumed: 417  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+Nothing to build for lab12
+
+**** Rebuild of configuration Debug for project lab8 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\lab8.o ..\src\lab8.c
+..\src\lab8.c: In function 'main':
+..\src\lab8.c:32:2: warning: passing argument 1 of 'strcopy' from incompatible pointer type [enabled by default]
+..\src\lab8.c:6:7: note: expected 'char *' but argument is of type 'char **'
+gcc -o lab8.exe src\lab8.o
+Build complete for project lab8
+Time consumed: 445  ms.  
+
+**** Build of configuration Debug for project lab12 ****
+
+**** Internal Builder is used for build               ****
+Nothing to build for lab12
+
+**** Rebuild of configuration Debug for project Lab11 ****
+
+**** Internal Builder is used for build               ****
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o src\Lab11.o ..\src\Lab11.c

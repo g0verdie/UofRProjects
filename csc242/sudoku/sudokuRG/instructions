@@ -1,0 +1,9 @@
+chmod 777 /MiniSat_v1.14_linux
+
+
+input for cnf file
+
+c at beginning = comment
+p cnf <#variables> <#clauses>
+<statement> 0
+<another statement> 0

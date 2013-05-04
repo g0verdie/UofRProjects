@@ -1,0 +1,15 @@
+public class Main 
+{
+	public static void main(String[] args)
+	{
+		//part 1
+		Heap heap = new Heap(8);
+		System.out.println("is empty- "+heap.isEmpty());
+		System.out.println("size- "+heap.size());
+		
+		//part 2
+		heap.insert(12);
+		heap.insert(22);
+		heap.printHeap();
+	}
+}

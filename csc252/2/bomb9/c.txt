@@ -1,0 +1,82 @@
+	8048d7e:	push   %edi				input = edi
+ 	8048d7f:	push   %esi
+ 	8048d80:	push   %ebx
+ 	8048d81:	sub    $0x40,%esp
+ 	8048d84:	lea    0x28(%esp),%eax			input = e[0x28]
+ 	8048d88:	mov    %eax,0x4(%esp)
+ 	8048d8c:	mov    0x50(%esp),%eax
+ 	8048d90:	mov    %eax,(%esp)
+ 	8048d93:	call   8049392 <read_six_numbers>
+edi = 0					8048d98:	mov    $0x0,%edi				edi = index		
+eax = arr[0]					8048d9d:	mov    0x28(%esp,%edi,4),%eax		
+eax --						8048da1:	sub    $0x1,%eax			
+ 						8048da4:	cmp    $0x5,%eax			
+if(eax > 6) 					8048da7:	jbe    8048dae <phase_6+0x30>		arr[i] < 5 blow up		
+	blow up				8048da9:    	call   8049247 <explode_bomb>		
+esi = edi+ 1					8048dae:	lea    0x1(%edi),%esi			esi = index + 1
+						8048db1:	cmp    $0x6,%esi				
+if(esi == 6)					8048db4:	je     8048deb <phase_6+0x6d>	if at last index
+	goto deb											
+ebx = esi					8048db6:	mov    %esi,%ebx
+eax = arr[ebx]				8048db8:	mov    0x28(%esp,%ebx,4),%eax	eax = next index in arr
+						8048dbc:	cmp    %eax,0x24(%esp,%esi,4)
+if(eax[ebx] == arr[esi-1])			8048dc0:	jne    8048dc7 <phase_6+0x49>	arr[i+1] == arr[i]
+	blow up				8048dc2:	call   8049247 <explode_bomb>
+
+ebx++						 8048dc7:	add    $0x1,%ebx			these two increment by 1	(so next pair)
+edi = esi					8048dca:	mov    %esi,%edi
+						8048dcc:	cmp    $0x5,%ebx
+if(ebx >= 5)					8048dcf:	jle    8048db8 <phase_6+0x3a>	repeat if not at end
+	jump to db8
+jump to d9d					8048dd1:	jmp    8048d9d <phase_6+0x1f>
+***************************************************************end part 1
+edx = edx[8]					8048dd3:	mov    0x8(%edx),%edx		nextnode?					
+eax++						8048dd6:	add    $0x1,%eax			eax starts as 2
+********************************************************************start part 2
+						8048dd9:	cmp    %ecx,%eax
+if(ecx != eax)				8048ddb:	jne    8048dd3 <phase_6+0x55>	until eax == 1st num(lowest at 2), repeat
+	goto dd3
+arr2[esi] = edx				8048ddd:	mov    %edx,0x10(%esp,%esi,4)	esi = 1 if 1st = 1, 0 otherwise
+ebx++						8048de1:	add    $0x1,%ebx			same with ebx
+						8048de4:	cmp    $0x6,%ebx
+if(ebx != 6)					8048de7:     jne    8048df0 <phase_6+0x72>
+	goto df0
+goto e07					8048de9:	jmp    8048e07 <phase_6+0x89>
+
+ebx = 0					8048deb:	mov    $0x0,%ebx					goes here after checking
+esi = ebx					8048df0:	mov    %ebx,%esi		
+ecx = arr[ebx]				8048df2:	mov    0x28(%esp,%ebx,4),%ecx	
+eax = 1					8048df6:	mov    $0x1,%eax			
+edx = node1					8048dfb:	mov    $0x804b254,%edx	
+						8048e00:	cmp    $0x1,%ecx		
+if(ecx < 1)					8048e03:	jg     8048dd3 <phase_6+0x55>	
+	goto dd3	
+goto ddd					8048e05:	jmp    8048ddd <phase_6+0x5f>				
+ebx = e[0x10]					8048e07:	mov    0x10(%esp),%ebx
+eax = e[0x14]					8048e0b:	mov    0x14(%esp),%eax
+e[0x10 + 0x8]					8048e0f:	mov    %eax,0x8(%ebx)
+edx = e[0x18]					8048e12:	mov    0x18(%esp),%edx
+eax[0x8] = edx				8048e16:	mov    %edx,0x8(%eax)
+eax = e[0x1c]					8048e19:	mov    0x1c(%esp),%eax
+edx[0x8]=eax					8048e1d:	mov    %eax,0x8(%edx)
+edx = e[0x20]					8048e20:	mov    0x20(%esp),%edx
+eax[8] = edx					8048e24:	mov    %edx,0x8(%eax)
+eax = e[0x24] 				8048e27:	mov    0x24(%esp),%eax
+edx[8] = eax					8048e2b:	mov    %eax,0x8(%edx)
+eax[8] = 0					8048e2e:	movl   $0x0,0x8(%eax)
+esi = 5					8048e35:	mov    $0x5,%esi
+eax = ebx[8]					8048e3a:	mov    0x8(%ebx),%eax
+edx = eax					8048e3d:	mov    (%eax),%edx
+						8048e3f:	cmp    %edx,(%ebx)
+if(edx > ebx)					8048e41:	jge    8048e48 <phase_6+0xca>
+	goto e48
+blow up					8048e43:	call   8049247 <explode_bomb>
+ebx = ebx[8]					8048e48:	mov    0x8(%ebx),%ebx
+esi--						8048e4b:	sub    $0x1,%esi
+						8048e4e:	jne    8048e3a <phase_6+0xbc> //////woring on it\\\\\\
+ 8048e50:	add    $0x40,%esp
+ 8048e53:	pop    %ebx
+ 8048e54:	pop    %esi
+ 8048e55:	pop    %edi
+ 8048e56:	ret    
+

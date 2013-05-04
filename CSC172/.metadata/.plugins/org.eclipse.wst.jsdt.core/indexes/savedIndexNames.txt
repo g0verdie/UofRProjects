@@ -1,0 +1,6 @@
+INDEX VERSION 1.122+C:\Users\Dan Scarafoni\Documents\CSC172\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1922695086.index
+1496158185.index
+95483553.index
+2537507726.index
+994357905.index

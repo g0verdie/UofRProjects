@@ -1,0 +1,54 @@
+import java.util.*;
+public class BNode {
+	private RandomVariableRG variable;
+	private ArrayList<BNode> parents = null;
+	private CPTRG cpt;
+	
+	
+	public BNode(RandomVariableRG variable, ArrayList<BNode> parents) {
+		//set variable, parents
+		this.variable = variable;
+		
+		//collect all relavent variables
+		ArrayList<RandomVariableRG> totalVar = new ArrayList<RandomVariableRG>();
+		for(BNode node : parents) {
+			totalVar.add(node.getVariable());
+		}
+		totalVar.add(variable);
+		//use them to make a cpt
+		cpt = new CPTRG(totalVar);
+	}
+	public void makeCPT(ArrayList<RandomVariableRG> variables)
+	{
+		
+	}
+	public BNode(RandomVariableRG variable) {
+		this.variable = variable;
+	}
+	public void addProbs(ArrayList<Integer> probabilities) {
+		cpt.addProbs(probabilities);
+	}
+	
+	public void addParent(BNode parent) {
+		this.parents.add(parent);
+	}
+	
+	public String getName() {
+		return variable.getName();
+	}
+	public RandomVariableRG getVariable() {
+		return variable;
+	}
+	
+	public void print() {
+		variable.print();
+		if(parents == null)
+			System.out.println("no parents");
+		else {
+			System.out.println("parents: ");
+			for(BNode p : parents) {
+				System.out.print(p.getName()+", ");
+			}
+		}
+	}
+}

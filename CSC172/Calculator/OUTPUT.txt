@@ -1,0 +1,23 @@
+Dan Scarafoni
+dscarafo@u.rochester.edu
+
+the answer for line 1 is 
+1.0
+the answer for line 2 is 
+12.0
+the answer for line 3 is 
+0.0
+the answer for line 4 is 
+0.0
+the answer for line 5 is 
+1.0
+the answer for line 6 is 
+1.0
+the answer for line 7 is 
+1.0
+the answer for line 8 is 
+42.0
+the answer for line 9 is 
+2.0
+the answer for line 10 is 
+0.0

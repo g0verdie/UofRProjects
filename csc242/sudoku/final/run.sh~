@@ -1,0 +1,4 @@
+#!/bin/bash
+java Sudoku wikipedia-examplle.sdk out
+./minisat toTranslate.txt translated.txt
+java Sudoku wikipedia-example.sdk in

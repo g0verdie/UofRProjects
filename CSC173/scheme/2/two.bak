@@ -1,0 +1,108 @@
+;trinary tree
+(display 2.1)(newline)
+(newline)
+
+(define (makeNode data left mid right)
+  (list data left mid right))
+
+(define (leftNode tree)
+  (second tree))
+
+(define (midNode tree)
+  (third tree))
+
+(define (rightNode tree)
+  (fourth tree))
+
+(define (copyTree toCopy)
+  (if (eqv? toCopy '())
+      '()
+      (let(
+           (s1 (copyTree (leftNode toCopy)))
+           (s2 (copyTree (midNode toCopy)))
+           (s3 (copyTree (rightNode toCopy)))
+           )
+        (makeNode (first toCopy) s1 s2 s3)
+        )
+      )    
+  )
+
+(define (lookup data tree)
+  ;(display tree)(newline)
+  (if (eqv? tree '())
+      '()
+      (if (eqv? data (first tree))
+          (begin
+          data
+          (display data))
+          (begin
+            ;(display "data")(newline)
+            (lookup data (leftNode tree))
+            (lookup data (midNode tree))
+            (lookup data (rightNode tree))
+            ) 
+          )
+      )
+  )
+
+    
+
+(display "filling out a tree t1 with subtrees s1 and s3")(newline)
+
+(let ( 
+      (s1 (makeNode 1 '() '() '()))
+      (s2 '())
+      (s3 (makeNode 3 '() '() '()))
+      )
+  ;and now to copy it
+  (let (
+        (t1 (makeNode 0 s1 s2 s3))) 
+    (let (
+          (t2 (copyTree t1)))
+      ;now let's compare the two
+      (display "t1- ")(display t1)(newline)
+      (display "t2- ")(display t2)(newline)
+      (display "are they equal? ")(display (equal? t1 t2))(newline)
+      (display "are they eq? ")(display (eq? t1 t2))(newline)
+      ;looking up the number "3"
+      (display "looking up the number '3'")(newline)
+      (lookup 3 t1)(newline)
+      (display "looking up the number '4'")(newline)
+      (lookup 4 t2)
+      )
+    )         
+  )
+
+;2.2
+(display "part 2.2- precedes iterative loop")(newline)
+
+(define(precI x vector)
+  (let (
+        (end (list '() )))
+    (do ((i 0 (+ i 1))) ((>= i (vector-length vector)))
+      (if (= x (vector-ref vector i))
+          (set! end (append (list (vector-ref vector (- i 1))) end))
+          )
+      )
+    (display end)
+    )
+  )
+(precI '2 #(1 2 3 4 2 5 2 6 2))(newline)
+
+
+(display "part 2.2- precedes recursive")(newline)
+
+(define(precR x vector i)
+  (if (= i (vector-length vector))
+      '()
+      (if (= x (vector-ref vector i))
+          (cons (vector-ref vector (- i 1)) (precR x vector (+ i 1)))
+          (precR x vector (+ i 1))
+          )
+      )
+  )
+(precR '2 #(1 2 3 4 2 5 2 6 2) 0)(newline)
+
+
+;2.3
+(display "2.3")(newline)

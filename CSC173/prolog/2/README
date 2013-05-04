@@ -1,0 +1,22 @@
+Dan Scarafoni
+dscarafo@u.rochester.edu
+Prolog Week 2
+
+Manifest:
+	two.pl- the prolog file for the project containing all necessary code
+	facts- a list of familial facts from the song used in 2B.2
+
+how to compile:
+	from prolog command, type "[two]."
+how to execute:
+	part 1: "palindrome(P)."
+	then enter in words that you wish to check as palindromes followed by "."
+	part 2: you may check any fact with the following queries/parameters:
+		pMar(Parent,Child)- checks to see if Parent is the parent of Child (includes 			relationships through marriage, and is not gender specific)
+
+		grandparents(Gprnt,Gchild)- checks to see is Gprnt is Gchild's grandparent (includes 			relationships through marriage, is not gender specific).
+		
+		brother(Sibling1,Sibling2)- checks to see if Sibling1 and Sibling2 are siblings	 			(includes relationships through marriage, is not gender specific).
+
+		unclAunt(U,N)- checks to see if U is N's Uncle/Aunt.
+		(includes relationships through marriage, is not gender specific).

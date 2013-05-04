@@ -1,0 +1,145 @@
+import java.io.IOException;
+import java.util.*;
+
+import javax.xml.parsers.ParserConfigurationException;
+import org.xml.sax.SAXException;
+public class GibbsSampling extends InferenceRG{
+	
+	public GibbsSampling(BNode query,BayesianNetworkRG bnet) 
+	{super(query,bnet);}
+	
+	public GibbsSampling(BNode query,ArrayList<String[]> evidence,BayesianNetworkRG bnet) 
+	{super(query,evidence,bnet);}
+	
+	public double[] gibbsAsk() {
+		Random random = new Random();
+		//set up answer vector
+		ArrayList<String> queryVals = this.query.getVariable().getDomain();
+		int[] foundEach = new int[queryVals.size()];
+		for(int i : foundEach)
+			i = 0;
+		
+		//get nonEvidence Variables
+		ArrayList<BNode> nonEv = BNode.copyArray(bnet.getNodes());
+		if(evidence.size() > 0)
+			nonEv.removeAll(evidenceVars);
+		//nonEv.add(query);
+		for(int i = 0; i < nonEv.size(); i++) {
+			BNode current = nonEv.get(i);
+			ArrayList<String> currentDomain = current.getDomain();
+			current.setVariable(currentDomain.get(random.nextInt(currentDomain.size())));
+		}
+		System.out.println(nonEv.size());
+		
+		double[] probEach = new double[queryVals.size()];
+		for(int i = 0; i < 1000; i++) {
+			for(int j = 0; j < nonEv.size(); j++) {
+				//change the value of current nonEv by sampling using markov blankets
+				BNode current = nonEv.get(j);
+				current.setVariable(mbSample(current));
+				//find value of x also using markov blankets
+				probEach[query.getDomain().indexOf(query.getVal())]++;
+			}
+		}
+		return normalize(probEach);
+	}
+	public String mbSample(BNode bnode) {
+
+		double[] endProbs = new double[bnode.getDomain().size()];
+		String holdVar = bnode.getVal();
+
+		//for each domain value
+		//System.out.println(bnode.getParents().size());
+		for(int i = 0; i < endProbs.length; i++) {
+			//get the probability of that value
+			bnode.setVariable(bnode.getDomain().get(i));
+			double fromParents = bnode.getCPT().findSpot(bnode.getParents());
+			//if(bnode == query)
+				//System.out.println("fromParents- "+fromParents);
+			double product = 1;
+			ArrayList<BNode> children = getChildren(bnode);
+			
+			//System.out.println("node- "+bnode.getName());
+			//System.out.println("children size- "+children.size());
+			for(int j = 0; j < children.size(); j++) {
+				BNode currentChild = children.get(j);
+				//System.out.println("finding in CPT- "+currentChild.getCPT().findSpot(currentChild.getParents()));
+				product *= currentChild.getCPT().findSpot(currentChild.getParents());
+			}
+			//if(bnode == query)
+				//System.out.println(product+"\n\n");
+			endProbs[i] = product*fromParents;
+		}
+		bnode.setVariable(holdVar);
+		return bnode.getDomain().get(greatest(endProbs));
+	}
+	
+	public ArrayList<BNode> getChildren(BNode parent) {
+	
+		ArrayList<BNode> nodes = bnet.getNodes();
+		ArrayList<BNode> children = new ArrayList<BNode>();
+
+		for(int i = 0; i < nodes.size(); i++) {
+			if(!nodes.get(i).getName().equals(parent.getName()) && nodes.get(i).getParents().contains(parent)) {
+				children.add(nodes.get(i));
+				}
+		}
+		return children;
+	}
+	public static ArrayList<BNode> setUpEvidence(ArrayList<String[]> evidence,BayesianNetworkRG bnet) {
+		ArrayList<BNode> evidenceVars = new ArrayList<BNode>();
+		for(String[] clause : evidence) {
+			BNode current = bnet.getNodeByName(clause[0]);
+			current.setVariable(clause[1]);
+			evidenceVars.add(current);
+		}
+		return evidenceVars;
+	}
+	
+	public int greatest(double[] vector) {
+		Random random = new Random();
+		
+		vector = normalize(vector);
+		double[][] range = new double[vector.length][2];
+		//give each spot a range
+		double base = 0;
+		for(int i = 0; i < range.length; i++) {
+			range[i][0] = base;
+			range[i][1] = base + vector[i];
+			base += vector[i];
+		}
+		
+		double rn = random.nextDouble();
+		//double greatest = 0;
+		int index = 0;
+		for(int i = 0; i < vector.length; i++) {
+			if(rn >= range[i][0] && rn < range[i][1])
+				index = i;
+		}
+		return index;
+	}
+	
+	public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+		XMLBIFParserRG parser = new XMLBIFParserRG();
+		BayesianNetworkRG network = parser.readNetworkFromFile(args[0]);
+		
+		//get query
+		BNode query = network.getNodeByName(args[1]);
+		
+		GibbsSampling gs;
+		if(args.length > 2) {
+			String[] eClauses = args[2].split(",");
+			ArrayList<String[]> eFinal = new ArrayList<String[]>();
+			for(int i = 0; i < eClauses.length; i++) {
+				String[] eClause = eClauses[i].split("=");
+				eFinal.add(eClause); 
+			}
+			gs = new GibbsSampling(query,eFinal,network);
+		}
+		else{
+			gs = new GibbsSampling(query,network);
+		}
+		gs.answer = gs.gibbsAsk();
+		gs.printQuery();
+	}
+}

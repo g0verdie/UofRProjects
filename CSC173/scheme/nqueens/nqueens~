@@ -1,0 +1,32 @@
+(define (nqueens n)
+  (let ( (board (vector '())))
+    ;initialize board
+    (do ((col 0 (+ col 1))) ((>= col n))
+      (set! board (append (list '0) board))
+      )
+    ;run through colums, start recursing
+    (display board)
+    )
+  )
+(nqueens 4)
+
+(define (colRecurse board col)
+  (if (= col n)
+      (board)
+
+      )
+  )
+
+(define (checkRow board row)
+  (if (member row board)
+      #t
+      #f
+      )
+  )
+
+(define (checkDiag board col spot n)
+  (do ((i 0 (+ i 1))) ((>= i n))
+    )
+  )
+       
+

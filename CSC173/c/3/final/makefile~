@@ -1,0 +1,29 @@
+OBJS = char_classes.o keywords.o main. o parser.o scanner.o reader.c
+INCS = char_classes.h keywords.h scanner.h reader.h
+FLAGS =  -g
+
+runtest:	$(OBJS)
+		gcc -o runtest $(FLAGS) $(OBJS)
+
+main.o:		main.c $(INCS)
+		gcc -c $(FLAGS) main.c
+
+char_classes.o:	char_classes.c $(INCS)
+		gcc -c $(FLAGS) char_classes.c
+
+keywords.o:       keywords.c $(INCS)
+		gcc -c $(FLAGS) keywords.c
+
+parser.o:		parser.c  $(INCS)
+		gcc -c $(FLAGS) parser.c
+
+scanner.o:	scanner.c $(INCS)
+		gcc -c $(FLAGS) scanner.c
+
+reader.o:	reader.c $(INCS)
+		gcc -c $(FLAGS) reader.c
+
+# your matrix code may be elsewhere of course
+ 
+clean:		
+		rm *.o
